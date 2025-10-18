@@ -23,7 +23,7 @@ export default function AdminDashboard() {
         <Card className="max-w-md">
           <CardContent className="pt-6 text-center">
             <h2 className="text-2xl font-bold mb-2">Access Denied</h2>
-            <p className="text-slate-600 mb-6">You don't have permission to access this page</p>
+            <p className="text-slate-600 mb-6">{`You don't have permission to access this page`}</p>
             <Button onClick={() => router.push('/')}>Go Home</Button>
           </CardContent>
         </Card>
@@ -43,7 +43,7 @@ export default function AdminDashboard() {
       <section className="bg-gradient-to-br from-emerald-50 to-teal-50 py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold text-slate-900 mb-2">Admin Dashboard</h1>
-          <p className="text-slate-600">Manage your e-commerce platform</p>
+          <p className="text-slate-600">{`Manage your e-commerce platform`}</p>
         </div>
       </section>
 

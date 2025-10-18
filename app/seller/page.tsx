@@ -22,8 +22,8 @@ export default function SellerDashboard() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardContent className="pt-6 text-center">
-            <h2 className="text-2xl font-bold mb-2">Access Denied</h2>
-            <p className="text-slate-600 mb-6">You don't have permission to access this page</p>
+            <h2 className="text-2xl font-bold mb-2">{`Access Denied`}</h2>
+            <p className="text-slate-600 mb-6">{`You don't have permission to access this page`}</p>
             <Button onClick={() => router.push('/')}>Go Home</Button>
           </CardContent>
         </Card>

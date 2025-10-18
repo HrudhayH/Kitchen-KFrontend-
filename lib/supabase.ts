@@ -52,7 +52,7 @@ export interface Product {
   compare_at_price?: number;
   quantity: number;
   sku: string;
-  images: string[];
+  images: string;
   specifications?: Record<string, any>;
   is_active: boolean;
   created_at: string;

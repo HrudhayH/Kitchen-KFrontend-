@@ -52,7 +52,7 @@ export default function ContactPage() {
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-5xl font-bold text-slate-900 mb-6">Contact Us</h1>
             <p className="text-xl text-slate-600">
-              Have a question or need assistance? We're here to help!
+              {`Have a question or need assistance? We're here to help!`}
             </p>
           </div>
         </div>
@@ -124,8 +124,8 @@ export default function ContactPage() {
                       <Mail className="h-5 w-5 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">Email</h3>
-                      <p className="text-sm text-slate-600">support@kitchenkettels.com</p>
+                      <h3 className="font-semibold mb-1">{`Email`}</h3>
+                      <p className="text-sm text-slate-600">{`support@kitchenkettels.com`}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -138,9 +138,9 @@ export default function ContactPage() {
                       <Phone className="h-5 w-5 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">Phone</h3>
-                      <p className="text-sm text-slate-600">Call +91 916444449</p>
-                      <p className="text-xs text-slate-500 mt-1">Mon-Fri, 9am-6pm EST</p>
+                      <h3 className="font-semibold mb-1">{`Phone`}</h3>
+                      <p className="text-sm text-slate-600">{`Call +91 916444449`}</p>
+                      <p className="text-xs text-slate-500 mt-1">{`Mon-Fri, 9am-6pm EST`}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -153,7 +153,7 @@ export default function ContactPage() {
                       <MapPin className="h-5 w-5 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold mb-1">Address</h3>
+                      <h3 className="font-semibold mb-1">{`Address`}</h3>
                       <p className="text-sm text-slate-600">
                         123 Kitchen Street<br />
                         New York, NY 10001<br />

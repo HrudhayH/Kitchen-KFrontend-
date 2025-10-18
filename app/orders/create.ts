@@ -11,13 +11,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // items: [{ product_id, quantity }]
   try {
     // compute totals server-side
-    const productIds = items.map((i) => i.product_id);
+    const productIds = items.map((i: { product_id: any; }) => i.product_id);
     const { data: products } = await supabaseAdmin.from('products').select('id, price').in('id', productIds);
 
     let subtotal = 0;
     for (const it of items) {
-      const p = products.find((x) => x.id === it.product_id);
-      subtotal += Number(p.price) * it.quantity;
+      const p = products?.find((x) => x.id === it.product_id);
+      subtotal += Number(p?.price) * it.quantity;
     }
     // basic tax & shipping
     const tax = subtotal * 0.05;
@@ -37,10 +37,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .single();
 
     // insert order_items
-    const orderItems = items.map(it => ({
+    const orderItems = items.map((it: { product_id: any; quantity: any; }) => ({
       order_id: order.id,
       product_id: it.product_id,
-      price: products.find(p => p.id === it.product_id).price,
+      price:products !== undefined? products?.find((p) => p?.id === it?.product_id).price:"",
       quantity: it.quantity
     }));
 

@@ -1,89 +1,82 @@
+// app/login/page.tsx
 "use client";
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { signIn } from '@/lib/auth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { toast } from 'sonner';
-import { ChefHat } from 'lucide-react';
+import React, { useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
+  const supabase = createClientComponentClient();
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const searchParams = useSearchParams();
+  const next = searchParams?.get("next") ?? "/";
+
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const signInEmail = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     setLoading(true);
-
-    try {
-      await signIn(email, password);
-      toast.success('Logged in successfully');
-      router.push('/');
-      router.refresh();
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to login');
-    } finally {
-      setLoading(false);
+    setError(null);
+    const { error: signErr } = await supabase.auth.signInWithPassword({
+      email,
+      password: pass,
+    });
+    setLoading(false);
+    if (signErr) {
+      setError(signErr.message);
+      return;
     }
+    router.push(next);
+  };
+
+  const signInGoogle = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        // redirect to current origin
+        redirectTo: `${window.location.origin}${next}`,
+      },
+    });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 flex flex-col items-center">
-          <div className="flex items-center gap-2 mb-2">
-            <ChefHat className="h-10 w-10 text-emerald-600" />
-            <span className="text-2xl font-bold">Kitchen Kettels</span>
-          </div>
-          <CardTitle className="text-2xl">Welcome back</CardTitle>
-          <CardDescription>
-            Enter your credentials to access your account
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Signing in...' : 'Sign In'}
-            </Button>
-            <p className="text-sm text-center text-slate-600">
-              Don&apos;t have an account?{' '}
-              <Link href="/register" className="text-emerald-600 hover:underline font-medium">
-                Register here
-              </Link>
-            </p>
-          </CardFooter>
-        </form>
-      </Card>
+    <div className="max-w-md mx-auto p-6 mt-12 bg-white rounded shadow">
+      <h1 className="text-2xl font-bold mb-4">Login</h1>
+      {error && <div className="text-red-600 mb-3">{error}</div>}
+      <form onSubmit={signInEmail} className="space-y-4">
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          className="w-full border px-3 py-2 rounded"
+          type="email"
+          required
+        />
+        <input
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          placeholder="Password"
+          className="w-full border px-3 py-2 rounded"
+          type="password"
+          required
+        />
+        <button disabled={loading} className="w-full bg-blue-600 text-white py-2 rounded">
+          {loading ? "Signing in..." : "Sign in"}
+        </button>
+      </form>
+
+      <div className="my-4 text-center">OR</div>
+
+      <button onClick={signInGoogle} className="w-full border py-2 rounded flex items-center justify-center gap-2">
+        <img src="/google-icon.png" alt="Google" className="h-5" />
+        Continue with Google
+      </button>
+
+      <p className="mt-4 text-sm">
+        Don't have an account? <a href="/signup" className="text-blue-600">Sign up</a>
+      </p>
     </div>
   );
 }

@@ -84,7 +84,7 @@ export default function ServicesPage() {
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-5xl font-bold text-slate-900 mb-6">Our Services</h1>
             <p className="text-xl text-slate-600">
-              We're committed to providing exceptional service at every step of your shopping journey.
+              {`We're committed to providing exceptional service at every step of your shopping journey.`}
             </p>
           </div>
         </div>
@@ -129,22 +129,22 @@ export default function ServicesPage() {
               <div>
                 <h3 className="text-xl font-semibold mb-3">Standard Delivery</h3>
                 <p className="text-slate-600">
-                  Our standard delivery service typically takes 3-5 business days. Orders are processed within
-                  24 hours of placement, and you'll receive tracking information via email.
+                  {`Our standard delivery service typically takes 3-5 business days. Orders are processed within
+                  24 hours of placement, and you'll receive tracking information via email.`}
                 </p>
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-3">Express Delivery</h3>
                 <p className="text-slate-600">
-                  Need your items faster? Choose express delivery at checkout for 1-2 business day delivery.
-                  Express delivery is available for an additional fee.
+                  {`Need your items faster? Choose express delivery at checkout for 1-2 business day delivery.
+                  Express delivery is available for an additional fee.`}
                 </p>
               </div>
               <div>
                 <h3 className="text-xl font-semibold mb-3">International Shipping</h3>
                 <p className="text-slate-600">
-                  We currently ship to select international destinations. International shipping rates and
-                  delivery times vary by location. Contact our support team for more information.
+                  {`We currently ship to select international destinations. International shipping rates and
+                  delivery times vary by location. Contact our support team for more information.`}
                 </p>
               </div>
             </div>
@@ -157,7 +157,7 @@ export default function ServicesPage() {
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-12 text-center">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Need Help?</h2>
             <p className="text-lg text-slate-600 mb-8">
-              Our customer service team is ready to assist you with any questions about our services.
+              {`Our customer service team is ready to assist you with any questions about our services.`}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -170,7 +170,7 @@ export default function ServicesPage() {
                 href="tel:+15551234567"
                 className="inline-flex items-center justify-center px-6 py-3 bg-white text-slate-900 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
               >
-                Call +91 916444449
+                {`Call +91 916444449`}
               </a>
             </div>
           </div>

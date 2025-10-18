@@ -29,7 +29,7 @@ export default async function CategoryPage({ params }: Props) {
 
   if (error) {
     console.error("Supabase error:", error);
-    return <p>Failed to load products.</p>;
+    return <p>{`Failed to load products.`}</p>;
   }
 
   if (!data || data.length === 0) {
@@ -42,14 +42,14 @@ export default async function CategoryPage({ params }: Props) {
     name: item.name,
     price: item.price,
     slug: item.slug,
-    image_url: item.images?? item.category?.images ?? "",
-    category_name: item.category?.name ?? "",
+    image_url: item.images??  "",
+    // category_name:item.category!== null ? item.category?.name: "",
   }));
     console.log(data)
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">
-        Products in "{slug}" category
+        {`Products in "{slug}" category`}
       </h1>
       <ProductList products={formatted} />
     </div>

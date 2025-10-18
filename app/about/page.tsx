@@ -30,14 +30,14 @@ export default function AboutPage() {
                 for home chefs and cooking enthusiasts seeking premium kitchen utensils and cookware.
               </p>
               <p className="mb-4">
-                We believe that great cooking starts with great tools. That's why we carefully curate our collection
+               {` We believe that great cooking starts with great tools. That's why we carefully curate our collection
                 to include only the finest products from renowned brands around the world. Every item in our catalog
-                is selected for its quality, functionality, and durability.
+                is selected for its quality, functionality, and durability.`}
               </p>
               <p>
-                Our mission is to empower home cooks and professional chefs alike by providing access to the best
+                {`Our mission is to empower home cooks and professional chefs alike by providing access to the best
                 kitchen equipment available. Whether you're preparing a family meal or hosting a dinner party,
-                we have the tools you need to create culinary masterpieces.
+                we have the tools you need to create culinary masterpieces.`}
               </p>
             </div>
           </div>
@@ -63,7 +63,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Customer Focus</h3>
               <p className="text-slate-600">
-                Your satisfaction is our priority. We're here to help you find the perfect tools.
+                {`Your satisfaction is our priority. We're here to help you find the perfect tools.`}
               </p>
             </div>
             <div className="text-center">
