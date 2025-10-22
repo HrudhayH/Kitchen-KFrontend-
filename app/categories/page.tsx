@@ -49,11 +49,11 @@ export default function CategoriesPage() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 gap-6">
               {categories.map((category) => (
                 <Link key={category.id} href={`/categories/${category.slug}`}>
                   <Card className="hover:shadow-lg transition-shadow cursor-pointer overflow-hidden group">
-                    <div className="relative h-40 bg-gradient-to-br from-emerald-100 to-teal-100">
+                    <div className="p-5 bg-white rounded-xl shadow-lg hover:scale-105 transition">
                       {category.image_url ? (
                         <img
                           src={category.image_url}

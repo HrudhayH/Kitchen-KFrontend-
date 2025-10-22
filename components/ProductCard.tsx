@@ -1,62 +1,45 @@
 // components/ProductCard.tsx
 "use client";
-import React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCart } from "./SupabaseCartContext";
+import { useCart } from "@/components/SupabaseCartContext";
+import { useToast } from "@/components/ToastContext";
+import { useState } from "react";
 
-type ProductCardProps = {
-  product: {
-    id: string;
-    slug: string;
-    name: string;
-    price: number;
-    image_url?: string;
-    rating?: number;
-  };
-};
-
-export default function ProductCard({ product }: ProductCardProps) {
-  const router = useRouter();
+export default function ProductCard({ product }: any) {
   const { addItem } = useCart();
+  const toast = useToast();
+  const [adding, setAdding] = useState(false);
+
+  const onAdd = async (e: any) => {
+    e.stopPropagation();
+    setAdding(true);
+    try {
+      await addItem({ id: product.id, name: product.name, price: product.price, image_url: product.images?.[0] ?? null }, 1);
+    } catch (err) {
+      toast.push({ message: "Failed to add", type: "error" });
+    } finally {
+      setAdding(false);
+    }
+  };
 
   return (
-    <div className="border rounded-lg p-4 cursor-pointer hover:shadow-lg transition flex flex-col">
-      <div onClick={() => router.push(`/products/${product.slug}`)} className="flex-1">
-        <div className="flex justify-center">
-          <img
-            src={product.image_url || "/no-image.jpg"}
-            alt={product.name}
-            className="h-40 object-contain"
-          />
+    <div className="bg-white border rounded-lg overflow-hidden flex flex-col">
+      <Link href={`/products/${product.slug}`}>
+        <div className="h-48 w-full overflow-hidden bg-gray-100">
+          {product.images?.[0] ? <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" /> : <div className="h-full flex items-center justify-center">No Image</div>}
         </div>
-
-        <h2 className="mt-2 font-semibold text-gray-800">{product.name}</h2>
-
-        <p className="text-lg font-bold mt-1">₹{product.price}</p>
-
-        <div className="text-sm text-green-600 mt-1">⭐ {product.rating ?? "4.2"}</div>
-      </div>
-
-      <div className="mt-3 flex gap-2">
-        <button
-          onClick={async (e) => {
-            e.stopPropagation();
-            await addItem({ id: product.id, name: product.name, price: product.price, image_url: product.image_url }, 1);
-          }}
-          className="flex-1 bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700"
-        >
-          Add to Cart
-        </button>
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            router.push(`/products/${product.slug}`);
-          }}
-          className="px-3 py-2 border rounded"
-        >
-          View
-        </button>
+      </Link>
+      <div className="p-3 flex flex-col flex-1">
+        <Link href={`/products/${product.slug}`} className="flex-1">
+          <h3 className="font-medium line-clamp-2">{product.name}</h3>
+        </Link>
+        <div className="mt-2 flex items-center justify-between">
+          <div className="text-lg font-bold">₹{product.price}</div>
+          <button onClick={onAdd} disabled={adding} className="bg-emerald-600 text-white px-3 py-1 rounded">
+            {adding ? "Adding..." : "Add"}
+          </button>
+        </div>
       </div>
     </div>
   );
