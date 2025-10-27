@@ -20,7 +20,7 @@ export default function CouponCodePage() {
   useEffect(() => {
     async function fetchCoupons() { 
         console.log("Hello this is Rajesh")
-    const { data, error } = await supabase.from("coupons").select("*").order("created_at", { ascending: false });
+    const { data, error } = await supabase.from("coupons").select("*");
       if (!error && data) setCoupons(data);
       setLoading(false);
     }
