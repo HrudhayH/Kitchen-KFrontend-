@@ -5,6 +5,7 @@ import ClientProviders from "@/components/ClientProviders";
 import { CartProvider } from "@/components/CartContext";
 import { ToastProvider } from "@/components/ToastContext";
 
+
 export const metadata = {
   title: "KitchenKettles",
   description: "Kitchen products and more",

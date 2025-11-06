@@ -53,13 +53,13 @@ export default function PaymentPage() {
         amount: data.amount,
         currency: data.currency,
         name: "KitchenKettles",
-        description: `Order ${order.id}`,
+        description: Order ${order.id},
         order_id: data.id,
         handler: async function (response: any) {
           // response contains razorpay_payment_id, razorpay_order_id, razorpay_signature
           // Update order status in Supabase
           await supabase.from("orders").update({ status: "paid", payment_info: response }).eq("id", order.id);
-          router.push(`/confirmation?orderId=${order.id}`);
+          router.push(/confirmation?orderId=${order.id});
         },
         prefill: {
           name: order.shipping_address?.name || "",

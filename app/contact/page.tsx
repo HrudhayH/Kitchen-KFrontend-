@@ -1,172 +1,153 @@
 "use client";
 
-import { useState } from 'react';
-import { Metadata } from 'next';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, MapPin } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
-import { toast } from 'sonner';
+import { Phone, Mail, MapPin, User, MessageSquare, Info } from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        });
-
-      if (error) throw error;
-
-      toast.success('Message sent successfully! We\'ll get back to you soon.');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to send message');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="bg-white min-h-screen">
-      <section className="bg-gradient-to-br from-emerald-50 to-teal-50 py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl font-bold text-slate-900 mb-6">Contact Us</h1>
-            <p className="text-xl text-slate-600">
-              {`Have a question or need assistance? We're here to help!`}
-            </p>
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center py-10">
+      {/* Title */}
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-3xl md:text-4xl font-semibold text-red-600 mb-10 tracking-wide"
+      >
+        CONTACT US
+      </motion.h1>
+
+      {/* Contact Info Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-6 mb-16">
+        {/* Phone */}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          className="flex flex-col items-center justify-center border-2 border-red-500 rounded-xl p-8 shadow-md hover:shadow-xl transition-all"
+        >
+          <div className="bg-red-600 text-white rounded-full p-4 mb-4">
+            <Phone className="w-6 h-6" />
           </div>
-        </div>
-      </section>
+          <h2 className="text-lg font-semibold mb-2">Phone Number</h2>
+          <p className="text-gray-700">+91 8989889880</p>
+        </motion.div>
 
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="lg:col-span-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Send us a message</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Name</Label>
-                        <Input
-                          id="name"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="subject">Subject</Label>
-                      <Input
-                        id="subject"
-                        value={formData.subject}
-                        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="message">Message</Label>
-                      <Textarea
-                        id="message"
-                        rows={6}
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        required
-                      />
-                    </div>
-                    <Button type="submit" disabled={loading} className="w-full">
-                      {loading ? 'Sending...' : 'Send Message'}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="space-y-6">
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-emerald-100 p-2 rounded-lg">
-                      <Mail className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">{`Email`}</h3>
-                      <p className="text-sm text-slate-600">{`support@kitchenkettels.com`}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-emerald-100 p-2 rounded-lg">
-                      <Phone className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">{`Phone`}</h3>
-                      <p className="text-sm text-slate-600">{`Call +91 916444449`}</p>
-                      <p className="text-xs text-slate-500 mt-1">{`Mon-Fri, 9am-6pm EST`}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-emerald-100 p-2 rounded-lg">
-                      <MapPin className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">{`Address`}</h3>
-                      <p className="text-sm text-slate-600">
-                        123 Kitchen Street<br />
-                        New York, NY 10001<br />
-                        United States
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+        {/* Email */}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          className="flex flex-col items-center justify-center border-2 border-red-500 rounded-xl p-8 shadow-md hover:shadow-xl transition-all"
+        >
+          <div className="bg-red-600 text-white rounded-full p-4 mb-4">
+            <Mail className="w-6 h-6" />
           </div>
-        </div>
-      </section>
+          <h2 className="text-lg font-semibold mb-2">E-mail</h2>
+          <p className="text-gray-700 text-center">
+            saleskitchenkittles@gmail.com
+          </p>
+        </motion.div>
+
+        {/* Address */}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          className="flex flex-col items-center justify-center border-2 border-red-500 rounded-xl p-8 shadow-md hover:shadow-xl transition-all"
+        >
+          <div className="bg-red-600 text-white rounded-full p-4 mb-4">
+            <MapPin className="w-6 h-6" />
+          </div>
+          <h2 className="text-lg font-semibold mb-2">Address</h2>
+          <p className="text-gray-700 text-center leading-relaxed">
+            Ground floor & First floor, No. 305, Shop No. 9,<br />
+            Varthur Main Road, Opp. Shani Mahatma Temple,<br />
+            Gunjur, Bengaluru – 560087
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Contact Form + Image Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl w-full px-6">
+        {/* Left Side Image */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="overflow-hidden rounded-2xl border-2 border-red-500"
+        >
+          <Image
+            src="/contact-image.png" // <-- replace this with your uploaded image path (e.g. /kitchen-contact.png)
+            alt="Contact Image"
+            width={600}
+            height={400}
+            className="object-cover w-full h-full"
+          />
+        </motion.div>
+
+        {/* Right Side Form */}
+        <motion.form
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col gap-4 bg-white shadow-md rounded-2xl p-8 border border-gray-200"
+        >
+          {/* Name */}
+          <div className="flex items-center border rounded-md px-3 py-2">
+            <User className="text-red-600 w-5 h-5 mr-2" />
+            <input
+              type="text"
+              placeholder="Your Name *"
+              className="w-full focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* Mobile */}
+          <div className="flex items-center border rounded-md px-3 py-2">
+            <Phone className="text-red-600 w-5 h-5 mr-2" />
+            <input
+              type="tel"
+              placeholder="Mobile *"
+              className="w-full focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* Email */}
+          <div className="flex items-center border rounded-md px-3 py-2">
+            <Mail className="text-red-600 w-5 h-5 mr-2" />
+            <input
+              type="email"
+              placeholder="Email Address *"
+              className="w-full focus:outline-none"
+              required
+            />
+          </div>
+
+          {/* Subject */}
+          <div className="flex items-center border rounded-md px-3 py-2">
+            <Info className="text-red-600 w-5 h-5 mr-2" />
+            <input
+              type="text"
+              placeholder="Subject"
+              className="w-full focus:outline-none"
+            />
+          </div>
+
+          {/* Message */}
+          <div className="border rounded-md px-3 py-2">
+            <textarea
+              placeholder="Additional Information..."
+              rows={4}
+              className="w-full focus:outline-none resize-none"
+            ></textarea>
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-red-700 transition"
+          >
+            Send Query →
+          </button>
+        </motion.form>
+      </div>
     </div>
   );
 }

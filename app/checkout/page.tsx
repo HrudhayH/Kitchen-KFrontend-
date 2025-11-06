@@ -19,13 +19,14 @@ export default function CheckoutPage() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [pin, setPin] = useState("");
+
   const discount = Number(searchParams.get("discount") || 0);
   const coupon = searchParams.get("coupon") || "";
 
   const subtotal = items.reduce((s, it) => s + it.price * (it.qty || 0), 0);
   const total = subtotal - (subtotal * discount) / 100;
 
-  // Prefill profile data if user logged in
+  // 🧠 Prefill user data if logged in
   useEffect(() => {
     (async () => {
       const { data } = await supabase.auth.getUser();
@@ -52,6 +53,7 @@ export default function CheckoutPage() {
     })();
   }, []);
 
+  // 🛒 Handle order placement
   async function handlePlaceOrder() {
     if (!items || items.length === 0) {
       alert("Cart is empty");
@@ -67,19 +69,16 @@ export default function CheckoutPage() {
       const { data: auth } = await supabase.auth.getUser();
       const user_id = auth?.user?.id || null;
 
+      // ✅ Order payload matching your DB schema
       const orderPayload = {
         user_id,
-        items: items.map((it) => ({
-          product_id: it.id,
-          name: it.name,
-          price: it.price,
-          qty: it.qty || 0,
-          image_url: it.image_url || null,
-        })),
+        order_number: "ORD-" + Date.now(), // unique order number
         subtotal: Number(subtotal),
-        discount_percent: Number(discount),
+        discount_amount: Number((subtotal * discount) / 100),
         total: Number(total),
-        status: "created",
+        status: "pending",
+        payment_status: "pending",
+        payment_method: "cod", // can be dynamic later
         shipping_address: {
           name,
           phone,
@@ -89,12 +88,22 @@ export default function CheckoutPage() {
           state,
           pin,
         },
-        coupon_code: coupon || null,
+        billing_address: {
+          name,
+          phone,
+          email,
+          address,
+          city,
+          state,
+          pin,
+        },
+        coupons: coupon || null, // ✅ matches your DB column
       };
 
+      // ✅ Insert into Supabase
       const { data: order, error } = await supabase
         .from("orders")
-        .insert([orderPayload]) // ✅ must be array
+        .insert([orderPayload])
         .select()
         .single();
 
@@ -105,7 +114,7 @@ export default function CheckoutPage() {
 
       clearCart();
       router.push(`/payment?orderId=${order.id}`);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Order placement error:", err);
       alert("Failed to place order: " + err.message);
     } finally {
@@ -116,36 +125,79 @@ export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
-        {/* Left: Address & Order Details */}
+        {/* Left: Address + Items */}
         <div className="md:col-span-2 space-y-4">
-          {/* Address */}
+          {/* Address Section */}
           <div className="bg-white p-6 rounded shadow">
             <h2 className="text-xl font-semibold mb-4">Delivery Address</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input className="border rounded px-3 py-2" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} />
-              <input className="border rounded px-3 py-2" placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-              <input className="border rounded px-3 py-2 md:col-span-2" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <textarea className="border rounded px-3 py-2 md:col-span-2" placeholder="Address" value={address} onChange={(e) => setAddress(e.target.value)} />
-              <input className="border rounded px-3 py-2" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-              <input className="border rounded px-3 py-2" placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
-              <input className="border rounded px-3 py-2" placeholder="PIN code" value={pin} onChange={(e) => setPin(e.target.value)} />
+              <input
+                className="border rounded px-3 py-2"
+                placeholder="Full name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input
+                className="border rounded px-3 py-2"
+                placeholder="Phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+              <input
+                className="border rounded px-3 py-2 md:col-span-2"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <textarea
+                className="border rounded px-3 py-2 md:col-span-2"
+                placeholder="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+              <input
+                className="border rounded px-3 py-2"
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <input
+                className="border rounded px-3 py-2"
+                placeholder="State"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              />
+              <input
+                className="border rounded px-3 py-2"
+                placeholder="PIN code"
+                value={pin}
+                onChange={(e) => setPin(e.target.value)}
+              />
             </div>
           </div>
 
-          {/* Order Details */}
+          {/* Order Items */}
           <div className="bg-white p-6 rounded shadow">
             <h2 className="text-xl font-semibold mb-4">Order Details</h2>
             <div className="space-y-3">
               {items.map((it) => (
                 <div key={it.id} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <img src={it.image_url || "/placeholder.png"} className="w-16 h-16 object-cover rounded" />
+                    <img
+                      src={it.image_url || "/placeholder.png"}
+                      className="w-16 h-16 object-cover rounded"
+                      alt={it.name}
+                    />
                     <div>
                       <div className="font-medium">{it.name}</div>
-                      <div className="text-sm text-gray-500">Qty: {it.qty || 0}</div>
+                      <div className="text-sm text-gray-500">
+                        Qty: {it.qty || 0}
+                      </div>
                     </div>
                   </div>
-                  <div className="font-semibold">₹{(it.price * (it.qty || 0)).toFixed(2)}</div>
+                  <div className="font-semibold">
+                    ₹{(it.price * (it.qty || 0)).toFixed(2)}
+                  </div>
                 </div>
               ))}
             </div>
