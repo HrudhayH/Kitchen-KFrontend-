@@ -120,7 +120,8 @@ export default function Navbar() {
           </button>
 
           {/* Menu Links */}
-          <ul className="hidden lg:flex items-center gap-4 xl:gap-8 text-sm xl:text-base text-gray-800 font-medium">
+          {/* Mobile fix: menu now scrolls horizontally on small screens. Original classes preserved. */}
+          <ul className="flex gap-6 overflow-x-auto whitespace-nowrap px-2 sm:px-4 -mx-2 sm:mx-0 items-center xl:gap-8 text-sm xl:text-base text-gray-800 font-medium">
             <li>
               <Link href="/" className="hover:text-emerald-600">Home</Link>
             </li>
