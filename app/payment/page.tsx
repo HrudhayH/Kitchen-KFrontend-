@@ -1,4 +1,5 @@
 // app/payment/page.tsx
+// To enable demo UI flow (no backend order creation), set NEXT_PUBLIC_USE_RAZORPAY_MOCK_FOR_UI=true in .env.local
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
@@ -36,6 +37,15 @@ export default function PaymentPage() {
   }, [orderId, fetchOrder]);
 
   async function handlePay() {
+    // BEGIN TEMPORARY DEMO: create a fake order locally when running in mock mode
+    // This block is safe for local testing and should be removed before production.
+    if (process.env.NEXT_PUBLIC_USE_RAZORPAY_MOCK_FOR_UI === "true" && !order) {
+      // Minimal fake order to let UI proceed to create Razorpay order (mock)
+      const fakeOrder = { id: "demo-order-local", total: 100.0, shipping_address: { name: "", email: "", phone: "" } };
+      setOrder(fakeOrder);
+    }
+    // END TEMPORARY DEMO
+
     if (!order) return;
     // Create Razorpay order server-side
     try {
@@ -57,9 +67,29 @@ export default function PaymentPage() {
         order_id: data.id,
         handler: async function (response: any) {
           // response contains razorpay_payment_id, razorpay_order_id, razorpay_signature
-          // Update order status in Supabase
-          await supabase.from("orders").update({ status: "paid", payment_info: response }).eq("id", order.id);
-          router.push(`/confirmation?orderId=${order.id}`);
+          try {
+            const verifyResp = await fetch("/api/razorpay/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                order_id: order.id,
+              }),
+            });
+            const verifyData = await verifyResp.json();
+            if (!verifyResp.ok || !verifyData.verified) {
+              alert("Payment verification failed. Please contact support.");
+              return;
+            }
+            // Update order status in Supabase after verification
+            await supabase.from("orders").update({ status: "paid", payment_info: response }).eq("id", order.id);
+            router.push(`/confirmation?orderId=${order.id}`);
+          } catch (err) {
+            console.error("Verification error:", err);
+            alert("Payment verification failed. Please contact support.");
+          }
         },
         prefill: {
           name: order.shipping_address?.name || "",
