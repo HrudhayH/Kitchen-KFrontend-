@@ -9,10 +9,37 @@ export default function CategoriesPage() {
 
   useEffect(() => {
     async function fetchCategories() {
-      const res = await fetch("/api/categories");
-      const data = await res.json();
-      setCategories(data);
-      setLoading(false);
+      try {
+        const res = await fetch("/api/categories");
+        if (!res.ok) {
+          console.error(`Failed to fetch categories: ${res.status} ${res.statusText}`);
+          setCategories([]);
+          return;
+        }
+        
+        let data;
+        try {
+          data = await res.json();
+        } catch (parseError) {
+          console.error("Failed to parse categories JSON:", parseError);
+          setCategories([]);
+          return;
+        }
+        
+        if (Array.isArray(data)) {
+          setCategories(data);
+        } else if (Array.isArray(data?.data)) {
+          setCategories(data.data);
+        } else {
+          console.error("Unexpected categories response format:", data);
+          setCategories([]);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        setCategories([]);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchCategories();
   }, []);
