@@ -3,64 +3,36 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+type Category = {
+  _id: string;
+  slug: string;
+  name: string;
+  image_url?: string;
+  description?: string;
+};
+
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchCategories() {
+    const fetchCategories = async () => {
       try {
         const res = await fetch("/api/categories");
-        if (!res.ok) {
-          console.error(`Failed to fetch categories: ${res.status} ${res.statusText}`);
-          setCategories([]);
-          return;
-        }
-        
-        let data;
-        try {
-          data = await res.json();
-        } catch (parseError) {
-          console.error("Failed to parse categories JSON:", parseError);
-          setCategories([]);
-          return;
-        }
-        
-        if (Array.isArray(data)) {
-          setCategories(data);
-        } else if (Array.isArray(data?.data)) {
-          setCategories(data.data);
-        } else {
-          console.error("Unexpected categories response format:", data);
-          setCategories([]);
-        }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        setCategories([]);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data: Category[] = await res.json();
+        setCategories(data);
+      } catch (err: any) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
-    }
+    };
+
     fetchCategories();
   }, []);
 
-
-  if (loading) return <p>Loading...</p>;
-
-  return 
-    <main className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Categories</h1>
-      <ul className="space-y-2">
-        {categories.map((cat) => (
-          <li key={cat._id} className="border p-3 rounded">
-            <Link href={`/categories/${cat.slug}`}>
-              <h2 className="font-semibold">{cat.name}</h2>
-              <p className="text-gray-500 text-sm">{cat.slug}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </main>
   if (loading) {
     return (
       <div className="bg-white min-h-screen">
@@ -83,6 +55,10 @@ export default function CategoriesPage() {
     );
   }
 
+  if (error) return <p className="text-red-500">Error: {error}</p>;
+
+  if (!categories || categories.length === 0) return <p>No categories found.</p>;
+
   return (
     <div className="bg-white min-h-screen">
       <section className="bg-gradient-to-br from-emerald-50 to-teal-50 py-12">
@@ -96,7 +72,7 @@ export default function CategoriesPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => (
-              <Link key={category._id || category.id} href={`/categories/${category.slug}`}>
+              <Link key={category._id || category.slug} href={`/categories/${category.slug}`}>
                 <div className="border p-6 rounded-xl hover:shadow-lg transition-shadow cursor-pointer bg-white">
                   {category.image_url && (
                     <div className="mb-4 h-48 overflow-hidden rounded-lg">
@@ -104,6 +80,9 @@ export default function CategoriesPage() {
                         src={category.image_url}
                         alt={category.name}
                         className="w-full h-full object-cover hover:scale-105 transition-transform"
+                        style={{ width: "100%", height: "auto" }} // fix aspect ratio warning
+                       
+
                       />
                     </div>
                   )}
