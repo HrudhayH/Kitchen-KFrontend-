@@ -25,7 +25,7 @@ export type LoginPayload = {
 /**
  * Login response types (various backend formats)
  */
-export type LoginResponse = 
+export type LoginResponse =
   | { token: string; user: User }
   | { success: true; data: { token: string; user: User } }
   | { success: true; token: string; user: User };

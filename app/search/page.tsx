@@ -28,7 +28,7 @@ export default function SearchPage() {
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }, [q]);
 
@@ -101,9 +101,9 @@ export default function SearchPage() {
             </>
           )}
 
-          {products.length === 0 && brands.length === 0 && categories.length === 0 && (
-            <p>No results found.</p>
-          )}
+          {products.length === 0 &&
+            brands.length === 0 &&
+            categories.length === 0 && <p>No results found.</p>}
         </>
       )}
     </div>

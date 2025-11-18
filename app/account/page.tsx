@@ -69,7 +69,9 @@ export default function AccountPage() {
                 href={action.href}
                 className="bg-white rounded-lg shadow-sm p-6 border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all group"
               >
-                <div className={`w-12 h-12 rounded-lg ${action.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                <div
+                  className={`w-12 h-12 rounded-lg ${action.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                >
                   {action.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">
@@ -88,15 +90,21 @@ export default function AccountPage() {
             <div className="space-y-3">
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Email</span>
-                <span className="text-gray-900 font-medium">{user?.email || "Not set"}</span>
+                <span className="text-gray-900 font-medium">
+                  {user?.email || "Not set"}
+                </span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Name</span>
-                <span className="text-gray-900 font-medium">{user?.name || "Not set"}</span>
+                <span className="text-gray-900 font-medium">
+                  {user?.name || "Not set"}
+                </span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-gray-600">Phone</span>
-                <span className="text-gray-900 font-medium">{user?.phone || "Not set"}</span>
+                <span className="text-gray-900 font-medium">
+                  {user?.phone || "Not set"}
+                </span>
               </div>
               <div className="flex justify-between items-center py-2">
                 <span className="text-gray-600">Member Since</span>

@@ -5,23 +5,32 @@
 
 "use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createOrder } from '@/lib/api/orders.api';
-import type { Order, ShippingAddress } from '@/lib/types';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createOrder } from "@/lib/api/orders.api";
+import type { Order, ShippingAddress } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2, CheckCircle, AlertCircle } from "lucide-react";
 
 interface CreateOrderClientProps {
   items: { product: string; qty: number; price?: number }[];
   onSuccess?: (order: Order) => void;
 }
 
-export default function CreateOrderClient({ items, onSuccess }: CreateOrderClientProps) {
+export default function CreateOrderClient({
+  items,
+  onSuccess,
+}: CreateOrderClientProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,38 +38,38 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
 
   // Form state
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
-    line1: '',
-    line2: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: '',
-    phone: '',
+    line1: "",
+    line2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: "",
+    phone: "",
   });
 
   const handleInputChange = (field: keyof ShippingAddress, value: string) => {
-    setShippingAddress(prev => ({ ...prev, [field]: value }));
+    setShippingAddress((prev) => ({ ...prev, [field]: value }));
   };
 
   const validateForm = (): boolean => {
     if (!shippingAddress.line1?.trim()) {
-      setError('Address line 1 is required');
+      setError("Address line 1 is required");
       return false;
     }
     if (!shippingAddress.city?.trim()) {
-      setError('City is required');
+      setError("City is required");
       return false;
     }
     if (!shippingAddress.postalCode?.trim()) {
-      setError('Postal code is required');
+      setError("Postal code is required");
       return false;
     }
     if (!shippingAddress.country?.trim()) {
-      setError('Country is required');
+      setError("Country is required");
       return false;
     }
     if (items.length === 0) {
-      setError('No items in order');
+      setError("No items in order");
       return false;
     }
     return true;
@@ -90,7 +99,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
 
       // Success
       setSuccess(true);
-      
+
       // Call success callback if provided
       if (onSuccess) {
         onSuccess(order);
@@ -101,11 +110,12 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
         if (order._id) {
           router.push(`/orders/${order._id}`);
         } else {
-          router.push('/orders');
+          router.push("/orders");
         }
       }, 1500);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to create order';
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to create order";
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -149,7 +159,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
                 type="text"
                 placeholder="Street address"
                 value={shippingAddress.line1}
-                onChange={(e) => handleInputChange('line1', e.target.value)}
+                onChange={(e) => handleInputChange("line1", e.target.value)}
                 required
                 disabled={loading || success}
               />
@@ -162,7 +172,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
                 type="text"
                 placeholder="Apartment, suite, etc. (optional)"
                 value={shippingAddress.line2}
-                onChange={(e) => handleInputChange('line2', e.target.value)}
+                onChange={(e) => handleInputChange("line2", e.target.value)}
                 disabled={loading || success}
               />
             </div>
@@ -175,7 +185,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
                   type="text"
                   placeholder="City"
                   value={shippingAddress.city}
-                  onChange={(e) => handleInputChange('city', e.target.value)}
+                  onChange={(e) => handleInputChange("city", e.target.value)}
                   required
                   disabled={loading || success}
                 />
@@ -188,7 +198,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
                   type="text"
                   placeholder="State"
                   value={shippingAddress.state}
-                  onChange={(e) => handleInputChange('state', e.target.value)}
+                  onChange={(e) => handleInputChange("state", e.target.value)}
                   disabled={loading || success}
                 />
               </div>
@@ -202,7 +212,9 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
                   type="text"
                   placeholder="ZIP / Postal code"
                   value={shippingAddress.postalCode}
-                  onChange={(e) => handleInputChange('postalCode', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("postalCode", e.target.value)
+                  }
                   required
                   disabled={loading || success}
                 />
@@ -215,7 +227,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
                   type="text"
                   placeholder="Country"
                   value={shippingAddress.country}
-                  onChange={(e) => handleInputChange('country', e.target.value)}
+                  onChange={(e) => handleInputChange("country", e.target.value)}
                   required
                   disabled={loading || success}
                 />
@@ -229,7 +241,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
                 type="tel"
                 placeholder="Phone number"
                 value={shippingAddress.phone}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
+                onChange={(e) => handleInputChange("phone", e.target.value)}
                 disabled={loading || success}
               />
             </div>
@@ -239,7 +251,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
           <div className="border-t pt-4">
             <h3 className="font-semibold text-lg mb-2">Order Summary</h3>
             <p className="text-sm text-slate-600">
-              {items.length} item{items.length !== 1 ? 's' : ''} in your order
+              {items.length} item{items.length !== 1 ? "s" : ""} in your order
             </p>
           </div>
 
@@ -261,7 +273,7 @@ export default function CreateOrderClient({ items, onSuccess }: CreateOrderClien
                 Order Placed!
               </>
             ) : (
-              'Place Order'
+              "Place Order"
             )}
           </Button>
         </form>

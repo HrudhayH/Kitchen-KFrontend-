@@ -4,7 +4,7 @@
  * Generated: 2025-11-10
  */
 
-import type { Order } from '@/lib/types/order';
+import type { Order } from "@/lib/types/order";
 
 /**
  * Normalize order list response
@@ -16,13 +16,13 @@ export function normalizeOrdersResponse(response: any): Order[] {
   if (Array.isArray(response)) {
     return response;
   }
-  
+
   // Wrapped in data
-  if (response && 'data' in response && Array.isArray(response.data)) {
+  if (response && "data" in response && Array.isArray(response.data)) {
     return response.data;
   }
-  
-  console.warn('Unexpected orders response format:', response);
+
+  console.warn("Unexpected orders response format:", response);
   return [];
 }
 
@@ -33,14 +33,14 @@ export function normalizeOrdersResponse(response: any): Order[] {
  */
 export function normalizeOrderResponse(response: any): Order {
   // Direct order object
-  if (response && '_id' in response) {
+  if (response && "_id" in response) {
     return response as Order;
   }
-  
+
   // Wrapped in data
-  if (response && 'data' in response) {
+  if (response && "data" in response) {
     return response.data as Order;
   }
-  
-  throw new Error('Invalid order response format');
+
+  throw new Error("Invalid order response format");
 }

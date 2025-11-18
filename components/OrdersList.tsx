@@ -48,7 +48,7 @@ export default function OrdersList() {
       setError(
         err instanceof Error
           ? err.message
-          : "Failed to load orders. Please try again."
+          : "Failed to load orders. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -72,7 +72,7 @@ export default function OrdersList() {
   // Get status badge configuration
   const getStatusBadge = (status?: string) => {
     const normalizedStatus = status?.toLowerCase() || "pending";
-    
+
     switch (normalizedStatus) {
       case "delivered":
         return {

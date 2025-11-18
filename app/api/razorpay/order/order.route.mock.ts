@@ -1,7 +1,7 @@
 // app/api/razorpay/order/order.route.mock.ts
 import { NextResponse } from "next/server";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   const { orderId } = await req.json().catch(() => ({}));

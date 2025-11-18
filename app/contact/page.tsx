@@ -55,8 +55,10 @@ export default function ContactPage() {
           </div>
           <h2 className="text-lg font-semibold mb-2">Address</h2>
           <p className="text-gray-700 text-center leading-relaxed">
-            Ground floor & First floor, No. 305, Shop No. 9,<br />
-            Varthur Main Road, Opp. Shani Mahatma Temple,<br />
+            Ground floor & First floor, No. 305, Shop No. 9,
+            <br />
+            Varthur Main Road, Opp. Shani Mahatma Temple,
+            <br />
             Gunjur, Bengaluru – 560087
           </p>
         </motion.div>

@@ -1,9 +1,9 @@
 /**
  * PaymentOrderSummary Component
- * 
+ *
  * Purpose: Displays a summary of order items, quantities, prices, and totals
  * in the payment result page.
- * 
+ *
  * Usage: Used in the Payment Result page to show what the customer purchased.
  */
 
@@ -41,7 +41,10 @@ export default function PaymentOrderSummary({
             >
               {/* Product Icon */}
               <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center">
-                <Package className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" aria-hidden="true" />
+                <Package
+                  className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400"
+                  aria-hidden="true"
+                />
               </div>
 
               {/* Product Info */}
@@ -66,7 +69,9 @@ export default function PaymentOrderSummary({
             </div>
           ))
         ) : (
-          <p className="text-gray-500 text-center py-4 text-sm">No items found</p>
+          <p className="text-gray-500 text-center py-4 text-sm">
+            No items found
+          </p>
         )}
       </div>
 

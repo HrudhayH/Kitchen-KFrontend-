@@ -18,9 +18,9 @@ export default function CouponCodePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchCoupons() { 
-        console.log("Hello this is Rajesh")
-    const { data, error } = await supabase.from("coupons").select("*");
+    async function fetchCoupons() {
+      console.log("Hello this is Rajesh");
+      const { data, error } = await supabase.from("coupons").select("*");
       if (!error && data) setCoupons(data);
       setLoading(false);
     }
@@ -60,7 +60,9 @@ export default function CouponCodePage() {
               <tbody>
                 {coupons.map((coupon) => (
                   <tr key={coupon.id} className="border-b hover:bg-gray-50">
-                    <td className="py-3 px-4 font-medium text-emerald-700">{coupon.code}</td>
+                    <td className="py-3 px-4 font-medium text-emerald-700">
+                      {coupon.code}
+                    </td>
                     <td className="py-3 px-4">{coupon.discount_percent}%</td>
                     <td className="py-3 px-4">
                       {coupon.expires_at

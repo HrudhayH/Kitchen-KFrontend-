@@ -1,9 +1,9 @@
 "use client";
 
-import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
-import { useCart } from '@/contexts/CartContext';
-import { Button } from '@/components/ui/button';
+import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
+import { Button } from "@/components/ui/button";
 import {
   ShoppingCart,
   User,
@@ -11,11 +11,11 @@ import {
   LayoutDashboard,
   ChefHat,
   Menu,
-  X
-} from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+  X,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,8 +23,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
+} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 
 export default function Navigation() {
   const { profile } = useAuth();
@@ -35,12 +35,12 @@ export default function Navigation() {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    router.push('/');
+    router.push("/");
   };
 
   const getDashboardLink = () => {
-    if (profile?.role === 'admin') return '/admin';
-    if (profile?.role === 'seller') return '/seller';
+    if (profile?.role === "admin") return "/admin";
+    if (profile?.role === "seller") return "/seller";
     return null;
   };
 
@@ -48,28 +48,49 @@ export default function Navigation() {
     <nav className="border-b bg-white sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-slate-900">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-xl font-bold text-slate-900"
+          >
             <ChefHat className="h-8 w-8 text-emerald-600" />
             <span>Kitchen Kettels</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/products" className="text-slate-700 hover:text-emerald-600 transition-colors">
+            <Link
+              href="/products"
+              className="text-slate-700 hover:text-emerald-600 transition-colors"
+            >
               Products
             </Link>
-            <Link href="/brands" className="text-slate-700 hover:text-emerald-600 transition-colors">
+            <Link
+              href="/brands"
+              className="text-slate-700 hover:text-emerald-600 transition-colors"
+            >
               Brands
             </Link>
-            <Link href="/categories" className="text-slate-700 hover:text-emerald-600 transition-colors">
+            <Link
+              href="/categories"
+              className="text-slate-700 hover:text-emerald-600 transition-colors"
+            >
               Categories
             </Link>
-            <Link href="/services" className="text-slate-700 hover:text-emerald-600 transition-colors">
+            <Link
+              href="/services"
+              className="text-slate-700 hover:text-emerald-600 transition-colors"
+            >
               Services
             </Link>
-            <Link href="/about" className="text-slate-700 hover:text-emerald-600 transition-colors">
+            <Link
+              href="/about"
+              className="text-slate-700 hover:text-emerald-600 transition-colors"
+            >
               About Us
             </Link>
-            <Link href="/contact" className="text-slate-700 hover:text-emerald-600 transition-colors">
+            <Link
+              href="/contact"
+              className="text-slate-700 hover:text-emerald-600 transition-colors"
+            >
               Contact
             </Link>
           </div>
@@ -97,21 +118,30 @@ export default function Navigation() {
                   <DropdownMenuContent align="end" className="w-56">
                     <DropdownMenuLabel>
                       <div className="flex flex-col">
-                        <span className="font-semibold">{profile.full_name}</span>
-                        <span className="text-xs text-slate-500">{profile.email}</span>
-                        <Badge variant="secondary" className="mt-1 w-fit text-xs">
+                        <span className="font-semibold">
+                          {profile.full_name}
+                        </span>
+                        <span className="text-xs text-slate-500">
+                          {profile.email}
+                        </span>
+                        <Badge
+                          variant="secondary"
+                          className="mt-1 w-fit text-xs"
+                        >
                           {profile.role}
                         </Badge>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {getDashboardLink() && (
-                      <DropdownMenuItem onClick={() => router.push(getDashboardLink()!)}>
+                      <DropdownMenuItem
+                        onClick={() => router.push(getDashboardLink()!)}
+                      >
                         <LayoutDashboard className="mr-2 h-4 w-4" />
                         Dashboard
                       </DropdownMenuItem>
                     )}
-                    <DropdownMenuItem onClick={() => router.push('/orders')}>
+                    <DropdownMenuItem onClick={() => router.push("/orders")}>
                       <ShoppingCart className="mr-2 h-4 w-4" />
                       My Orders
                     </DropdownMenuItem>
@@ -125,10 +155,10 @@ export default function Navigation() {
               </>
             ) : (
               <div className="hidden md:flex gap-2">
-                <Button variant="outline" onClick={() => router.push('/login')}>
+                <Button variant="outline" onClick={() => router.push("/login")}>
                   Login
                 </Button>
-                <Button onClick={() => router.push('/register')}>
+                <Button onClick={() => router.push("/register")}>
                   Register
                 </Button>
               </div>
@@ -140,7 +170,11 @@ export default function Navigation() {
               className="md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>
@@ -191,10 +225,17 @@ export default function Navigation() {
             </Link>
             {!profile && (
               <div className="flex gap-2 pt-2">
-                <Button variant="outline" onClick={() => router.push('/login')} className="flex-1">
+                <Button
+                  variant="outline"
+                  onClick={() => router.push("/login")}
+                  className="flex-1"
+                >
                   Login
                 </Button>
-                <Button onClick={() => router.push('/register')} className="flex-1">
+                <Button
+                  onClick={() => router.push("/register")}
+                  className="flex-1"
+                >
                   Register
                 </Button>
               </div>

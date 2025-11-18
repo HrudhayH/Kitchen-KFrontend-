@@ -50,7 +50,7 @@ const MOCK_ORDER = {
       qty: 1,
       quantity: 1,
       price: 2949,
-      image: "/assets/images/kettle-demo.jpg"
+      image: "/assets/images/kettle-demo.jpg",
     },
     {
       _id: "prod_002",
@@ -60,8 +60,8 @@ const MOCK_ORDER = {
       qty: 2,
       quantity: 2,
       price: 3499,
-      image: "/assets/images/kettle-demo.jpg"
-    }
+      image: "/assets/images/kettle-demo.jpg",
+    },
   ],
   subtotal: 9947,
   tax: 0,
@@ -72,7 +72,7 @@ const MOCK_ORDER = {
     method: "Razorpay",
     status: "paid",
     transactionId: "txn_demo_002_preview",
-    paidAt: new Date().toISOString()
+    paidAt: new Date().toISOString(),
   },
   shippingAddress: {
     name: "Demo User",
@@ -82,12 +82,12 @@ const MOCK_ORDER = {
     state: "Karnataka",
     postalCode: "560087",
     country: "India",
-    phone: "+91 98765 43210"
+    phone: "+91 98765 43210",
   },
-  user: { 
-    name: "Demo User", 
-    email: "demo@demo.com" 
-  }
+  user: {
+    name: "Demo User",
+    email: "demo@demo.com",
+  },
 } as const;
 
 interface OrderDetailProps {
@@ -111,16 +111,16 @@ export default function OrderDetail({ orderId }: OrderDetailProps) {
     try {
       setLoading(true);
       setError(null);
-      
+
       // DEMO MODE: Use mock data instead of real API call
       if (USE_MOCK_ORDER_DETAIL_PREVIEW) {
         // Simulate network delay for realistic demo experience
-        await new Promise(resolve => setTimeout(resolve, 350));
+        await new Promise((resolve) => setTimeout(resolve, 350));
         setOrder(MOCK_ORDER as any);
         setLoading(false);
         return;
       }
-      
+
       // REAL MODE: Fetch from backend API
       const data = await getOrder(orderId);
       if (data) {
@@ -133,7 +133,7 @@ export default function OrderDetail({ orderId }: OrderDetailProps) {
       setError(
         err instanceof Error
           ? err.message
-          : "Failed to load order details. Please try again."
+          : "Failed to load order details. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -224,7 +224,9 @@ export default function OrderDetail({ orderId }: OrderDetailProps) {
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Failed to Load Order
             </h3>
-            <p className="text-gray-600 mb-6 max-w-md">{error || "Order not found"}</p>
+            <p className="text-gray-600 mb-6 max-w-md">
+              {error || "Order not found"}
+            </p>
             <button
               onClick={fetchOrderDetail}
               className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors shadow-sm"

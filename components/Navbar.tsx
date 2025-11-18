@@ -138,7 +138,10 @@ export default function Navbar() {
   };
 
   return (
-    <header ref={headerRef} className="w-full sticky top-0 z-50 shadow bg-white">
+    <header
+      ref={headerRef}
+      className="w-full sticky top-0 z-50 shadow bg-white"
+    >
       {/* Top header row */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex flex-col lg:flex-row items-center justify-between gap-2">
@@ -156,9 +159,22 @@ export default function Navbar() {
               />
             ) : (
               <div className="h-8 sm:h-10 md:h-12 flex items-center">
-                <svg className="h-full w-auto" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  className="h-full w-auto"
+                  viewBox="0 0 160 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <rect width="160" height="48" rx="8" fill="#10b981" />
-                  <text x="80" y="30" fontSize="14" fontWeight="700" fill="white" textAnchor="middle" fontFamily="system-ui, sans-serif">
+                  <text
+                    x="80"
+                    y="30"
+                    fontSize="14"
+                    fontWeight="700"
+                    fill="white"
+                    textAnchor="middle"
+                    fontFamily="system-ui, sans-serif"
+                  >
                     Kitchen Kettles
                   </text>
                 </svg>
@@ -167,7 +183,10 @@ export default function Navbar() {
           </Link>
 
           {/* Search (center) */}
-          <form onSubmit={handleSearch} className="w-full lg:flex-1 lg:max-w-xl relative order-3 lg:order-2">
+          <form
+            onSubmit={handleSearch}
+            className="w-full lg:flex-1 lg:max-w-xl relative order-3 lg:order-2"
+          >
             <input
               type="text"
               value={q}
@@ -180,8 +199,18 @@ export default function Navbar() {
               aria-label="Search"
               className="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-600 text-white rounded-full p-2 hover:bg-emerald-700 transition-colors"
             >
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg
+                className="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
               </svg>
             </button>
           </form>
@@ -190,26 +219,50 @@ export default function Navbar() {
           <div className="flex items-center gap-3 text-sm order-2 lg:order-3">
             {user ? (
               <>
-                <span className="hidden sm:inline truncate max-w-[160px]">{user.email}</span>
-                <button onClick={handleLogout} className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600">
+                <span className="hidden sm:inline truncate max-w-[160px]">
+                  {user.email}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600"
+                >
                   Logout
                 </button>
               </>
             ) : (
               <>
-                <Link href="/login" className="text-emerald-600 hover:text-emerald-700 px-2 py-1">
+                <Link
+                  href="/login"
+                  className="text-emerald-600 hover:text-emerald-700 px-2 py-1"
+                >
                   Login
                 </Link>
                 <span className="text-gray-300 hidden sm:inline">|</span>
-                <Link href="/register" className="text-emerald-600 hover:text-emerald-700 px-2 py-1">
+                <Link
+                  href="/register"
+                  className="text-emerald-600 hover:text-emerald-700 px-2 py-1"
+                >
                   Register
                 </Link>
               </>
             )}
 
-            <a href="mailto:info@kitchenkettles.com" className="hidden lg:flex items-center gap-2 text-xs text-gray-600">
-              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8" />
+            <a
+              href="mailto:info@kitchenkettles.com"
+              className="hidden lg:flex items-center gap-2 text-xs text-gray-600"
+            >
+              <svg
+                className="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8"
+                />
                 <rect x="3" y="6" width="18" height="12" rx="2" />
               </svg>
               <span>info@kitchenkettles.com</span>
@@ -230,53 +283,186 @@ export default function Navbar() {
             type="button"
           >
             {mobileOpen ? (
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="h-6 w-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             ) : (
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="h-6 w-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             )}
           </button>
 
           {/* Desktop menu */}
           <ul className="hidden lg:flex gap-6 items-center text-sm text-gray-800 font-medium">
-            <li><Link href="/" className="px-2 py-1 hover:text-emerald-600">Home</Link></li>
-            <li><Link href="/products" className="px-2 py-1 hover:text-emerald-600">Products</Link></li>
-            <li><Link href="/categories" className="px-2 py-1 hover:text-emerald-600">Categories</Link></li>
-            <li><Link href="/brands" className="px-2 py-1 hover:text-emerald-600">Brands</Link></li>
-            <li><Link href="/services" className="px-2 py-1 hover:text-emerald-600">Services</Link></li>
-            <li><Link href="/about" className="px-2 py-1 hover:text-emerald-600">About</Link></li>
-            <li><Link href="/contact" className="px-2 py-1 hover:text-emerald-600">Contact</Link></li>
+            <li>
+              <Link href="/" className="px-2 py-1 hover:text-emerald-600">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/products"
+                className="px-2 py-1 hover:text-emerald-600"
+              >
+                Products
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/categories"
+                className="px-2 py-1 hover:text-emerald-600"
+              >
+                Categories
+              </Link>
+            </li>
+            <li>
+              <Link href="/brands" className="px-2 py-1 hover:text-emerald-600">
+                Brands
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/services"
+                className="px-2 py-1 hover:text-emerald-600"
+              >
+                Services
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className="px-2 py-1 hover:text-emerald-600">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/contact"
+                className="px-2 py-1 hover:text-emerald-600"
+              >
+                Contact
+              </Link>
+            </li>
           </ul>
 
           {/* Mobile quick links */}
           <div className="flex lg:hidden items-center gap-3">
-            <Link href="/products" className="px-2 py-1 text-sm hover:text-emerald-600">Products</Link>
-            <Link href="/categories" className="px-2 py-1 text-sm hover:text-emerald-600">Categories</Link>
+            <Link
+              href="/products"
+              className="px-2 py-1 text-sm hover:text-emerald-600"
+            >
+              Products
+            </Link>
+            <Link
+              href="/categories"
+              className="px-2 py-1 text-sm hover:text-emerald-600"
+            >
+              Categories
+            </Link>
           </div>
 
           {/* Cart button */}
-          <Link href="/cart" className="flex items-center gap-2 px-3 py-1.5 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5" />
+          <Link
+            href="/cart"
+            className="flex items-center gap-2 px-3 py-1.5 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          >
+            <svg
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5"
+              />
             </svg>
             <span className="hidden sm:inline">Cart</span>
           </Link>
         </div>
 
         {/* Mobile dropdown */}
-        <div className={`lg:hidden bg-gray-100 border-t transition-[max-height] duration-300 ease-in-out overflow-hidden ${mobileOpen ? "max-h-96" : "max-h-0"}`}>
+        <div
+          className={`lg:hidden bg-gray-100 border-t transition-[max-height] duration-300 ease-in-out overflow-hidden ${mobileOpen ? "max-h-96" : "max-h-0"}`}
+        >
           <div className="px-4 py-2 space-y-1">
-            <Link href="/" className="block py-2 px-2 rounded hover:bg-gray-200" onClick={() => setMobileOpen(false)}>Home</Link>
-            <Link href="/products" className="block py-2 px-2 rounded hover:bg-gray-200" onClick={() => setMobileOpen(false)}>Products</Link>
-            <Link href="/categories" className="block py-2 px-2 rounded hover:bg-gray-200" onClick={() => setMobileOpen(false)}>Categories</Link>
-            <Link href="/brands" className="block py-2 px-2 rounded hover:bg-gray-200" onClick={() => setMobileOpen(false)}>Brands</Link>
-            <Link href="/services" className="block py-2 px-2 rounded hover:bg-gray-200" onClick={() => setMobileOpen(false)}>Services</Link>
-            <Link href="/about" className="block py-2 px-2 rounded hover:bg-gray-200" onClick={() => setMobileOpen(false)}>About</Link>
-            <Link href="/contact" className="block py-2 px-2 rounded hover:bg-gray-200" onClick={() => setMobileOpen(false)}>Contact</Link>
-            <Link href="/cart" className="block py-2 px-2 rounded hover:bg-gray-200 border-t mt-2 pt-2" onClick={() => setMobileOpen(false)}>🛒 Cart</Link>
+            <Link
+              href="/"
+              className="block py-2 px-2 rounded hover:bg-gray-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              href="/products"
+              className="block py-2 px-2 rounded hover:bg-gray-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              Products
+            </Link>
+            <Link
+              href="/categories"
+              className="block py-2 px-2 rounded hover:bg-gray-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              Categories
+            </Link>
+            <Link
+              href="/brands"
+              className="block py-2 px-2 rounded hover:bg-gray-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              Brands
+            </Link>
+            <Link
+              href="/services"
+              className="block py-2 px-2 rounded hover:bg-gray-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              Services
+            </Link>
+            <Link
+              href="/about"
+              className="block py-2 px-2 rounded hover:bg-gray-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className="block py-2 px-2 rounded hover:bg-gray-200"
+              onClick={() => setMobileOpen(false)}
+            >
+              Contact
+            </Link>
+            <Link
+              href="/cart"
+              className="block py-2 px-2 rounded hover:bg-gray-200 border-t mt-2 pt-2"
+              onClick={() => setMobileOpen(false)}
+            >
+              🛒 Cart
+            </Link>
           </div>
         </div>
       </nav>

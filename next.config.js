@@ -9,12 +9,13 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'prgkwuilcdaxujjflnbb.supabase.co',
-        port: '',
-        pathname: '/storage/v1/object/public/**',
+        protocol: "https",
+        hostname: "prgkwuilcdaxujjflnbb.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/**",
       },
     ],
+    domains: ["via.placeholder.com", "placehold.co"],
   },
 
   // Custom webpack configuration
@@ -25,8 +26,8 @@ const nextConfig = {
     // Add your specific warning ignore rule
     config.ignoreWarnings.push((warn) =>
       /Critical dependency: the request of a dependency is an expression/.test(
-        warn.message || ''
-      )
+        warn.message || "",
+      ),
     );
 
     return config;

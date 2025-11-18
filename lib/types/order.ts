@@ -58,7 +58,13 @@ export type Order = {
   subtotal?: number;
   tax?: number;
   shippingCost?: number;
-  status?: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | string;
+  status?:
+    | "pending"
+    | "processing"
+    | "shipped"
+    | "delivered"
+    | "cancelled"
+    | string;
   createdAt?: string;
   updatedAt?: string;
 };
@@ -75,13 +81,9 @@ export type CreateOrderPayload = {
 /**
  * API response wrapper types
  */
-export type OrdersApiResponse = 
-  | Order[]
-  | { success: true; data: Order[] };
+export type OrdersApiResponse = Order[] | { success: true; data: Order[] };
 
-export type OrderApiResponse = 
-  | Order
-  | { success: true; data: Order };
+export type OrderApiResponse = Order | { success: true; data: Order };
 
 export type CreateOrderApiResponse =
   | Order

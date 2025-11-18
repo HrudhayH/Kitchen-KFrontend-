@@ -1,9 +1,9 @@
 /**
  * PaymentResult Component
- * 
+ *
  * Purpose: Displays the payment status banner (success, pending, or failed)
  * with appropriate colors, icons, and messaging.
- * 
+ *
  * Usage: Used in the Payment Result page to show clear visual feedback
  * about the payment outcome.
  */
@@ -70,7 +70,8 @@ export default function PaymentResult({
           iconColor: "text-red-600",
           icon: <XCircle className="w-12 h-12" />,
           title: "Payment Failed",
-          message: failureReason || 
+          message:
+            failureReason ||
             "Unfortunately, your payment could not be processed. This could be due to insufficient funds, incorrect card details, or bank decline. Please try again or use another payment method.",
         };
       default:
@@ -100,12 +101,16 @@ export default function PaymentResult({
         </div>
 
         {/* Title */}
-        <h1 className={`text-2xl md:text-3xl font-bold mb-3 ${config.textColor}`}>
+        <h1
+          className={`text-2xl md:text-3xl font-bold mb-3 ${config.textColor}`}
+        >
           {config.title}
         </h1>
 
         {/* Message */}
-        <p className={`text-base md:text-lg mb-4 max-w-2xl ${config.textColor}`}>
+        <p
+          className={`text-base md:text-lg mb-4 max-w-2xl ${config.textColor}`}
+        >
           {config.message}
         </p>
 
@@ -151,7 +156,8 @@ export default function PaymentResult({
           </div>
         )}
 
-        {(normalizedStatus === "failed" || normalizedStatus === "cancelled") && (
+        {(normalizedStatus === "failed" ||
+          normalizedStatus === "cancelled") && (
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
             {onRetryPayment && (
               <button

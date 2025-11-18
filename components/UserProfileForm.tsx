@@ -13,7 +13,13 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/hooks/useAuth";
-import { Loader2, Save, Check, AlertCircle, User as UserIcon } from "lucide-react";
+import {
+  Loader2,
+  Save,
+  Check,
+  AlertCircle,
+  User as UserIcon,
+} from "lucide-react";
 
 interface ProfileFormData {
   name: string;
@@ -114,7 +120,7 @@ export default function UserProfileForm() {
       // await refreshUser();
 
       setSuccess(true);
-      
+
       // Auto-hide success message after 3 seconds
       setTimeout(() => setSuccess(false), 3000);
     } catch (error) {
@@ -122,7 +128,7 @@ export default function UserProfileForm() {
       setApiError(
         error instanceof Error
           ? error.message
-          : "Failed to update profile. Please try again."
+          : "Failed to update profile. Please try again.",
       );
     } finally {
       setLoading(false);

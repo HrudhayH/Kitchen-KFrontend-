@@ -5,14 +5,19 @@
 
 import { apiGet, apiPost } from "@/lib/api";
 import type { User, LoginPayload, LoginResponse } from "@/lib/types/user";
-import { normalizeAuthResponse, normalizeUserResponse } from "@/lib/adapters/auth.adapter";
+import {
+  normalizeAuthResponse,
+  normalizeUserResponse,
+} from "@/lib/adapters/auth.adapter";
 
 /**
  * Login user with email/phone and password/OTP
  * @param payload - Login credentials (email or phone + password or OTP)
  * @returns Object with token and user data
  */
-export async function login(payload: LoginPayload): Promise<{ token: string; user: User }> {
+export async function login(
+  payload: LoginPayload,
+): Promise<{ token: string; user: User }> {
   const hasEmailOrPhone = payload.email || payload.phone;
   const hasPasswordOrOTP = payload.password || payload.otp;
 
@@ -34,7 +39,8 @@ export async function login(payload: LoginPayload): Promise<{ token: string; use
 
       return normalized;
     } catch (error) {
-      lastError = error instanceof Error ? error : new Error("Login request failed");
+      lastError =
+        error instanceof Error ? error : new Error("Login request failed");
       continue;
     }
   }
@@ -103,12 +109,15 @@ export async function register(payload: {
 
       return normalized;
     } catch (error) {
-      lastError = error instanceof Error ? error : new Error("Registration failed");
+      lastError =
+        error instanceof Error ? error : new Error("Registration failed");
       continue;
     }
   }
 
-  throw lastError || new Error("Registration failed - all endpoints unreachable");
+  throw (
+    lastError || new Error("Registration failed - all endpoints unreachable")
+  );
 }
 
 /**
@@ -116,16 +125,17 @@ export async function register(payload: {
  */
 export async function requestOtp(
   email: string,
-  purpose: "login" | "signup" | "forgot" = "login"
+  purpose: "login" | "signup" | "forgot" = "login",
 ): Promise<{ message?: string; id?: string }> {
   try {
     const response = await apiPost<{ message?: string; id?: string }>(
       "/auth/request-otp",
-      { email, purpose }
+      { email, purpose },
     );
     return response;
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to request OTP";
+    const message =
+      error instanceof Error ? error.message : "Failed to request OTP";
     throw new Error(message);
   }
 }
@@ -166,7 +176,8 @@ export async function verifyOtp(payload: {
 
     return { token, user };
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to verify OTP";
+    const message =
+      error instanceof Error ? error.message : "Failed to verify OTP";
     throw new Error(message);
   }
 }

@@ -5,19 +5,25 @@
 
 "use client";
 
-import CreateOrderClient from '@/app/orders/CreateOrderClient';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ShoppingBag } from 'lucide-react';
+import CreateOrderClient from "@/app/orders/CreateOrderClient";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ShoppingBag } from "lucide-react";
 
 export default function CreateOrderTestPage() {
   // Sample items for testing
   const sampleItems = [
-    { product: '507f1f77bcf86cd799439011', qty: 2, price: 29.99 },
-    { product: '507f1f77bcf86cd799439012', qty: 1, price: 49.99 },
+    { product: "507f1f77bcf86cd799439011", qty: 2, price: 29.99 },
+    { product: "507f1f77bcf86cd799439012", qty: 1, price: 49.99 },
   ];
 
   const handleSuccess = (order: any) => {
-    console.log('Order created successfully:', order);
+    console.log("Order created successfully:", order);
   };
 
   return (
@@ -38,16 +44,20 @@ export default function CreateOrderTestPage() {
           </CardHeader>
           <CardContent>
             <div className="bg-white rounded-lg p-4 border border-emerald-200">
-              <h3 className="font-semibold text-sm mb-2">Sample Items in Cart:</h3>
+              <h3 className="font-semibold text-sm mb-2">
+                Sample Items in Cart:
+              </h3>
               <ul className="text-sm text-slate-600 space-y-1">
                 {sampleItems.map((item, index) => (
                   <li key={index}>
-                    • Product ID: {item.product} - Qty: {item.qty} - Price: ${item.price}
+                    • Product ID: {item.product} - Qty: {item.qty} - Price: $
+                    {item.price}
                   </li>
                 ))}
               </ul>
               <p className="text-xs text-slate-500 mt-3">
-                Note: Make sure you&apos;re logged in and have a valid auth token in localStorage
+                Note: Make sure you&apos;re logged in and have a valid auth
+                token in localStorage
               </p>
             </div>
           </CardContent>

@@ -1,9 +1,9 @@
 /**
  * PaymentDetails Component
- * 
+ *
  * Purpose: Displays payment gateway information, transaction ID, payment method,
  * and payment timestamp with copy-to-clipboard functionality.
- * 
+ *
  * Usage: Used in the Payment Result page to show detailed payment information.
  */
 
@@ -149,11 +149,13 @@ export default function PaymentDetails({ order }: PaymentDetailsProps) {
               payment.status?.toLowerCase() === "success"
                 ? "bg-green-100 text-green-800"
                 : payment.status?.toLowerCase() === "pending"
-                ? "bg-yellow-100 text-yellow-800"
-                : "bg-red-100 text-red-800"
+                  ? "bg-yellow-100 text-yellow-800"
+                  : "bg-red-100 text-red-800"
             }`}
           >
-            {payment.status ? payment.status.charAt(0).toUpperCase() + payment.status.slice(1) : "Unknown"}
+            {payment.status
+              ? payment.status.charAt(0).toUpperCase() + payment.status.slice(1)
+              : "Unknown"}
           </span>
         </div>
       </div>

@@ -26,12 +26,16 @@ export default function CheckoutPage() {
   const subtotal = items.reduce((s, it) => s + it.price * (it.qty || 0), 0);
   const total = subtotal - (subtotal * discount) / 100;
 
-    // 🧠 Prefill user data if logged in
+  // 🧠 Prefill user data if logged in
   useEffect(() => {
     (async () => {
       const { data } = await supabase.auth.getUser();
       if (data?.user) {
-        const { data: profile } = await supabase.from("profiles").select("*").eq("id", data.user.id).maybeSingle();
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", data.user.id)
+          .maybeSingle();
         if (profile) {
           setName(profile.full_name || "");
           setEmail(data.user.email || "");
@@ -118,7 +122,9 @@ export default function CheckoutPage() {
         <div className="lg:col-span-2 space-y-4">
           {/* Address Section */}
           <div className="bg-white p-4 sm:p-6 rounded shadow">
-            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Delivery Address</h2>
+            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+              Delivery Address
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <input
                 className="border rounded px-3 py-2 text-sm sm:text-base"
@@ -168,10 +174,15 @@ export default function CheckoutPage() {
 
           {/* Order Items */}
           <div className="bg-white p-4 sm:p-6 rounded shadow">
-            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Order Details</h2>
+            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+              Order Details
+            </h2>
             <div className="space-y-3">
               {items.map((it) => (
-                <div key={it.id} className="flex items-start sm:items-center justify-between gap-3 flex-col sm:flex-row">
+                <div
+                  key={it.id}
+                  className="flex items-start sm:items-center justify-between gap-3 flex-col sm:flex-row"
+                >
                   <div className="flex items-center gap-3 w-full sm:w-auto">
                     {/* TODO: replace with next/image if src is static */}
                     <img
@@ -180,7 +191,9 @@ export default function CheckoutPage() {
                       alt={it.name}
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="font-medium text-sm sm:text-base truncate">{it.name}</div>
+                      <div className="font-medium text-sm sm:text-base truncate">
+                        {it.name}
+                      </div>
                       <div className="text-xs sm:text-sm text-gray-500">
                         Qty: {it.qty || 0}
                       </div>
@@ -198,7 +211,9 @@ export default function CheckoutPage() {
         {/* Right: Summary */}
         <div>
           <div className="bg-white p-4 sm:p-6 rounded shadow space-y-3 sm:space-y-4 sticky top-20">
-            <h3 className="text-base sm:text-lg font-semibold">Order Summary</h3>
+            <h3 className="text-base sm:text-lg font-semibold">
+              Order Summary
+            </h3>
             <div className="flex justify-between text-xs sm:text-sm">
               <div>Subtotal</div>
               <div>₹{subtotal.toFixed(2)}</div>

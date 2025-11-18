@@ -9,9 +9,7 @@
     "appRouterPages": {
       "description": "App Router root page (app/page.tsx)",
       "status": "found",
-      "paths": [
-        "kk-frontend/app/page.tsx"
-      ],
+      "paths": ["kk-frontend/app/page.tsx"],
       "sampleMatches": [
         {
           "file": "kk-frontend/app/page.tsx",
@@ -58,9 +56,7 @@
     "protectedRoute": {
       "description": "ProtectedRoute component",
       "status": "found",
-      "paths": [
-        "kk-frontend/components/ProtectedRoute.tsx"
-      ],
+      "paths": ["kk-frontend/components/ProtectedRoute.tsx"],
       "sampleMatches": [
         {
           "file": "kk-frontend/components/ProtectedRoute.tsx",
@@ -198,9 +194,7 @@
     "brandRoutes": {
       "description": "Brand routes (brand.routes.js)",
       "status": "found",
-      "paths": [
-        "kk-backend/src/routes/brand.routes.js"
-      ],
+      "paths": ["kk-backend/src/routes/brand.routes.js"],
       "sampleMatches": [
         {
           "file": "kk-backend/src/routes/brand.routes.js",
@@ -277,10 +271,7 @@
     "databaseConfig": {
       "description": "Database configuration and seed files",
       "status": "found",
-      "paths": [
-        "kk-backend/src/config/db.js",
-        "kk-backend/src/seed/seed.js"
-      ],
+      "paths": ["kk-backend/src/config/db.js", "kk-backend/src/seed/seed.js"],
       "sampleMatches": [
         {
           "file": "kk-backend/src/config/db.js",
@@ -333,9 +324,7 @@
     "ProtectedRoute": {
       "keyword": "ProtectedRoute",
       "count": 3,
-      "files": [
-        "kk-frontend/components/ProtectedRoute.tsx"
-      ],
+      "files": ["kk-frontend/components/ProtectedRoute.tsx"],
       "samples": [
         {
           "file": "kk-frontend/components/ProtectedRoute.tsx",
@@ -397,9 +386,7 @@
     "SupabaseCartContext": {
       "keyword": "SupabaseCartContext",
       "count": 1,
-      "files": [
-        "kk-frontend/components/SupabaseCartContext.tsx"
-      ],
+      "files": ["kk-frontend/components/SupabaseCartContext.tsx"],
       "samples": [
         {
           "file": "kk-frontend/components/SupabaseCartContext.tsx",

@@ -53,7 +53,7 @@ export default function ProductsPage() {
   // Filter by search
   const filtered = Array.isArray(products)
     ? products.filter((p) =>
-        p.title.toLowerCase().includes(searchQuery.toLowerCase())
+        p.title.toLowerCase().includes(searchQuery.toLowerCase()),
       )
     : [];
 
@@ -66,7 +66,7 @@ export default function ProductsPage() {
         price: product.price,
         image_url: product.images?.[0] || "",
       },
-      1
+      1,
     );
     router.push("/cart");
   };
@@ -137,7 +137,7 @@ export default function ProductsPage() {
                             product.images[0].includes("via.placeholder.com")
                               ? product.images[0].replace(
                                   "via.placeholder.com",
-                                  "placehold.co"
+                                  "placehold.co",
                                 )
                               : product.images[0]
                           }
@@ -147,7 +147,7 @@ export default function ProductsPage() {
                       ) : (
                         <img
                           src={`https://placehold.co/400x400?text=${encodeURIComponent(
-                            product.title
+                            product.title,
                           )}`}
                           alt={product.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform"
@@ -168,7 +168,9 @@ export default function ProductsPage() {
                       </CardTitle>
                     </Link>
                     {product.brand && (
-                      <p className="text-sm text-slate-500">{product.brand.name}</p>
+                      <p className="text-sm text-slate-500">
+                        {product.brand.name}
+                      </p>
                     )}
                   </CardHeader>
                   <CardContent>

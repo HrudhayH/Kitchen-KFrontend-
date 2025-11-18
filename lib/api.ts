@@ -3,12 +3,16 @@
  * Centralized API helper for calling your backend
  */
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5001/api";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5001/api";
 
 /**
  * Generic fetch wrapper for API calls
  */
-export async function apiFetch<T = any>(path: string, options: RequestInit = {}): Promise<T> {
+export async function apiFetch<T = any>(
+  path: string,
+  options: RequestInit = {},
+): Promise<T> {
   const url = `${API_BASE}${path}`;
   try {
     const res = await fetch(url, {
@@ -21,7 +25,10 @@ export async function apiFetch<T = any>(path: string, options: RequestInit = {})
     });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      console.error(`❌ API request failed: ${res.status} ${res.statusText} (${path})`, text);
+      console.error(
+        `❌ API request failed: ${res.status} ${res.statusText} (${path})`,
+        text,
+      );
       throw new Error(`API ${path} failed (${res.status})`);
     }
     return (await res.json()) as T;
@@ -41,7 +48,10 @@ export async function apiGet<T = any>(path: string): Promise<T> {
     });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      console.error(`❌ API GET failed: ${res.status} ${res.statusText} (${path})`, text);
+      console.error(
+        `❌ API GET failed: ${res.status} ${res.statusText} (${path})`,
+        text,
+      );
       throw new Error(`GET ${path} failed (${res.status})`);
     }
     return (await res.json()) as T;
@@ -62,7 +72,10 @@ export async function apiPost<T = any>(path: string, body: any): Promise<T> {
     });
     if (!res.ok) {
       const text = await res.text().catch(() => "");
-      console.error(`❌ API POST failed: ${res.status} ${res.statusText} (${path})`, text);
+      console.error(
+        `❌ API POST failed: ${res.status} ${res.statusText} (${path})`,
+        text,
+      );
       throw new Error(`POST ${path} failed (${res.status})`);
     }
     return (await res.json()) as T;
@@ -95,7 +108,8 @@ export async function apiDelete<T = any>(path: string): Promise<T> {
 export function buildQueryString(params: Record<string, any>): string {
   const searchParams = new URLSearchParams();
   Object.entries(params).forEach(([k, v]) => {
-    if (v !== undefined && v !== null && v !== "") searchParams.append(k, String(v));
+    if (v !== undefined && v !== null && v !== "")
+      searchParams.append(k, String(v));
   });
   const q = searchParams.toString();
   return q ? `?${q}` : "";

@@ -3,19 +3,22 @@
  * Handles all order-related API calls with robust error handling
  */
 
-import { apiFetch } from '@/lib/api';
-import { getAccessToken } from '@/lib/utils/auth';
+import { apiFetch } from "@/lib/api";
+import { getAccessToken } from "@/lib/utils/auth";
 import type {
   Order,
   CreateOrderPayload,
   OrdersApiResponse,
   OrderApiResponse,
   CreateOrderApiResponse,
-} from '@/lib/types/order';
-import { normalizeOrdersResponse, normalizeOrderResponse } from '@/lib/adapters/order.adapter';
+} from "@/lib/types/order";
+import {
+  normalizeOrdersResponse,
+  normalizeOrderResponse,
+} from "@/lib/adapters/order.adapter";
 
 // Base API URL for direct backend calls (when needed)
-const API_BASE_URL = 'http://localhost:5001';
+const API_BASE_URL = "http://localhost:5001";
 
 /**
  * Custom error type for API errors
@@ -31,7 +34,7 @@ export interface ApiError {
  * Fetch with authentication and robust error handling
  * Automatically adds Authorization header with Bearer token
  * Handles network errors, CORS errors, and non-2xx responses
- * 
+ *
  * @param path - API path (e.g., '/api/orders/me')
  * @param opts - Fetch options
  * @returns Parsed JSON response
@@ -39,7 +42,7 @@ export interface ApiError {
  */
 export async function fetchWithAuth(
   path: string,
-  opts: RequestInit = {}
+  opts: RequestInit = {},
 ): Promise<any> {
   // Get token from localStorage or cookies
   const token = getAccessToken();
@@ -48,7 +51,7 @@ export async function fetchWithAuth(
   if (!token) {
     const error: ApiError = {
       status: 401,
-      message: 'No token',
+      message: "No token",
     };
     throw error;
   }
@@ -56,7 +59,7 @@ export async function fetchWithAuth(
   // Build request with Authorization header
   const url = `${API_BASE_URL}${path}`;
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
     ...opts.headers,
   };
@@ -71,7 +74,7 @@ export async function fetchWithAuth(
     // Handle non-2xx responses
     if (!response.ok) {
       let errorBody: any = {};
-      
+
       // Try to parse error response body
       try {
         errorBody = await response.json();
@@ -81,13 +84,14 @@ export async function fetchWithAuth(
           const text = await response.text();
           errorBody = { message: text };
         } catch {
-          errorBody = { message: 'Unknown error' };
+          errorBody = { message: "Unknown error" };
         }
       }
 
       const error: ApiError = {
         status: response.status,
-        message: errorBody.message || `Request failed with status ${response.status}`,
+        message:
+          errorBody.message || `Request failed with status ${response.status}`,
         body: errorBody,
       };
       throw error;
@@ -97,10 +101,10 @@ export async function fetchWithAuth(
     return await response.json();
   } catch (err) {
     // Check if this is a network error or CORS error
-    if (err instanceof TypeError && err.message.includes('fetch')) {
+    if (err instanceof TypeError && err.message.includes("fetch")) {
       const error: ApiError = {
         status: 0,
-        message: 'Network or CORS error',
+        message: "Network or CORS error",
         originalError: err,
       };
       throw error;
@@ -114,7 +118,7 @@ export async function fetchWithAuth(
     // Wrap other errors
     const error: ApiError = {
       status: 0,
-      message: err instanceof Error ? err.message : 'Unknown error',
+      message: err instanceof Error ? err.message : "Unknown error",
       originalError: err,
     };
     throw error;
@@ -129,15 +133,15 @@ export async function fetchWithAuth(
  */
 export async function createOrder(payload: CreateOrderPayload): Promise<Order> {
   try {
-    const response = await apiFetch<CreateOrderApiResponse>('/orders', {
-      method: 'POST',
+    const response = await apiFetch<CreateOrderApiResponse>("/orders", {
+      method: "POST",
       body: JSON.stringify(payload),
     });
 
     // ADAPTER: Normalize response using adapter
     return normalizeOrderResponse(response);
   } catch (error) {
-    console.error('Failed to create order:', error);
+    console.error("Failed to create order:", error);
     throw error;
   }
 }
@@ -149,13 +153,13 @@ export async function createOrder(payload: CreateOrderPayload): Promise<Order> {
  * - Array of orders directly
  * - { orders: [...] }
  * - { data: [...] }
- * 
+ *
  * @returns Array of Order objects
  * @throws ApiError if request fails
  */
 export async function getOrders(): Promise<Order[]> {
   try {
-    const response = await fetchWithAuth('/api/orders/me');
+    const response = await fetchWithAuth("/api/orders/me");
 
     // Normalize response to array
     let orders: Order[] = [];
@@ -174,7 +178,7 @@ export async function getOrders(): Promise<Order[]> {
       orders = response.data.orders;
     } else {
       // Unknown response shape - return empty array
-      console.warn('Unexpected orders response shape:', response);
+      console.warn("Unexpected orders response shape:", response);
       return [];
     }
 
@@ -182,12 +186,12 @@ export async function getOrders(): Promise<Order[]> {
     const validOrders = orders.filter((order: any) => {
       const hasId = order._id || order.id;
       const hasItems = order.items && Array.isArray(order.items);
-      
+
       if (!hasId || !hasItems) {
-        console.warn('Invalid order object:', order);
+        console.warn("Invalid order object:", order);
         return false;
       }
-      
+
       return true;
     });
 
@@ -221,7 +225,7 @@ export async function getOrder(id: string): Promise<Order | null> {
   } catch (error) {
     console.error(`Failed to fetch order with ID "${id}":`, error);
     // Return null for 404s, throw for other errors
-    if (error instanceof Error && error.message.includes('404')) {
+    if (error instanceof Error && error.message.includes("404")) {
       return null;
     }
     throw error;

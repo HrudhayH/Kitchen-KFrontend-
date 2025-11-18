@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Profile } from '@/lib/supabase';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Profile } from "@/lib/supabase";
 
 interface AuthContextType {
   user: any;
@@ -26,12 +26,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshProfile = async () => {
     try {
-      const { data: { user: currentUser } } = await supabase.auth.getUser();
+      const {
+        data: { user: currentUser },
+      } = await supabase.auth.getUser();
       if (currentUser) {
         const { data: profileData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', currentUser.id)
+          .from("profiles")
+          .select("*")
+          .eq("id", currentUser.id)
           .single();
         setProfile(profileData);
         setUser(currentUser);
@@ -40,7 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(null);
       }
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      console.error("Error fetching profile:", error);
       setProfile(null);
       setUser(null);
     }
@@ -51,13 +53,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         await refreshProfile();
       } catch (error) {
-        console.error('Auth error:', error);
+        console.error("Auth error:", error);
       } finally {
         setLoading(false);
       }
     })();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         await refreshProfile();

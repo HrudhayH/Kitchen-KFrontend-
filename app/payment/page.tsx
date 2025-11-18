@@ -1,11 +1,11 @@
 /**
  * Payment Result Page
- * 
+ *
  * Purpose: Displays payment outcome and order details after payment processing.
  * Shows success/pending/failed status, order summary, payment details, and action buttons.
- * 
+ *
  * Route: /payment?orderId=<ORDER_ID>
- * 
+ *
  * Features:
  * - Reads orderId from query params
  * - Fetches order details from API
@@ -26,7 +26,7 @@ const USE_MOCK_ORDER_FOR_PREVIEW = true;
 
 // DEMO: Use this to switch payment states quickly for presentation
 // Options: 'success' | 'pending' | 'failed'
-const PREVIEW_PAYMENT_STATE: 'success' | 'pending' | 'failed' = 'success';
+const PREVIEW_PAYMENT_STATE: "success" | "pending" | "failed" = "success";
 
 // Mock order data for demo purposes (success state)
 const MOCK_ORDER_SUCCESS = {
@@ -153,7 +153,8 @@ const MOCK_ORDER_FAILED = {
     status: "failed",
     transactionId: "txn_demo_failed_003",
     paidAt: null,
-    failureReason: "Payment declined by bank. Please check your card details or try another payment method.",
+    failureReason:
+      "Payment declined by bank. Please check your card details or try another payment method.",
   },
   user: {
     name: "Demo User",
@@ -169,7 +170,6 @@ const MOCK_ORDER_FAILED = {
     phone: "+91 98765 43210",
   },
 };
-
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -229,24 +229,24 @@ function PaymentPageContent() {
 
       // DEMO MODE: Use mock data based on PREVIEW_PAYMENT_STATE
       if (USE_MOCK_ORDER_FOR_PREVIEW) {
-        await new Promise(r => setTimeout(r, 300));
-        
+        await new Promise((r) => setTimeout(r, 300));
+
         // Return appropriate mock data based on preview state
         let mockData;
         switch (PREVIEW_PAYMENT_STATE) {
-          case 'success':
+          case "success":
             mockData = MOCK_ORDER_SUCCESS;
             break;
-          case 'pending':
+          case "pending":
             mockData = MOCK_ORDER_PENDING;
             break;
-          case 'failed':
+          case "failed":
             mockData = MOCK_ORDER_FAILED;
             break;
           default:
             mockData = MOCK_ORDER_SUCCESS;
         }
-        
+
         setOrder(mockData as any);
         setLoading(false);
         return;
@@ -254,19 +254,22 @@ function PaymentPageContent() {
 
       // Try using the API helper first
       let orderData: Order | null = null;
-      
+
       try {
         orderData = await getOrder(orderId);
       } catch (apiError) {
         console.warn("getOrder helper failed, trying direct fetch:", apiError);
-        
+
         // Fallback to direct fetch
-        const response = await fetch(`http://localhost:5001/api/orders/${orderId}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken") || ""}`,
+        const response = await fetch(
+          `http://localhost:5001/api/orders/${orderId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("accessToken") || ""}`,
+            },
           },
-        });
+        );
 
         if (!response.ok) {
           throw new Error(`Failed to fetch order: ${response.status}`);
@@ -286,7 +289,7 @@ function PaymentPageContent() {
       setError(
         err instanceof Error
           ? err.message
-          : "Failed to load order details. Please try again."
+          : "Failed to load order details. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -305,7 +308,7 @@ function PaymentPageContent() {
   // Handle WhatsApp support link
   const handleContactSupport = () => {
     const message = encodeURIComponent(
-      `Hi, I need help with my order #${orderId?.slice(-8).toUpperCase()}`
+      `Hi, I need help with my order #${orderId?.slice(-8).toUpperCase()}`,
     );
     window.open(`https://wa.me/919876543210?text=${message}`, "_blank");
   };
@@ -314,11 +317,11 @@ function PaymentPageContent() {
   // Simulates payment confirmation after a delay
   const handleDemoCheckStatus = async () => {
     if (!USE_MOCK_ORDER_FOR_PREVIEW) return;
-    
+
     setDemoCheckingStatus(true);
     // Simulate checking payment status with backend
-    await new Promise(r => setTimeout(r, 2000));
-    
+    await new Promise((r) => setTimeout(r, 2000));
+
     // Transition to success state
     setOrder(MOCK_ORDER_SUCCESS as any);
     setDemoCheckingStatus(false);
@@ -328,7 +331,9 @@ function PaymentPageContent() {
   const handleDemoRetryPayment = () => {
     // In a real app, this would re-open the Razorpay checkout modal
     // For demo, just show a toast or alert
-    alert("Demo: Would re-open payment checkout modal here. Payment flow would restart.");
+    alert(
+      "Demo: Would re-open payment checkout modal here. Payment flow would restart.",
+    );
   };
 
   // Loading State
@@ -419,8 +424,17 @@ function PaymentPageContent() {
             orderId={order._id || order.id || orderId}
             transactionId={order.payment?.transactionId}
             // DEMO: Pass handlers for interactive demo buttons
-            onCheckStatus={USE_MOCK_ORDER_FOR_PREVIEW && paymentStatus === "pending" ? handleDemoCheckStatus : undefined}
-            onRetryPayment={USE_MOCK_ORDER_FOR_PREVIEW && (paymentStatus === "failed" || paymentStatus === "cancelled") ? handleDemoRetryPayment : undefined}
+            onCheckStatus={
+              USE_MOCK_ORDER_FOR_PREVIEW && paymentStatus === "pending"
+                ? handleDemoCheckStatus
+                : undefined
+            }
+            onRetryPayment={
+              USE_MOCK_ORDER_FOR_PREVIEW &&
+              (paymentStatus === "failed" || paymentStatus === "cancelled")
+                ? handleDemoRetryPayment
+                : undefined
+            }
             onContactSupport={handleContactSupport}
             checkingStatus={demoCheckingStatus}
             failureReason={(order.payment as any)?.failureReason}
