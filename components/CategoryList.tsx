@@ -23,7 +23,13 @@ export default function CategoryList({ categories }: { categories: any[] }) {
       </aside>
 
       <section className="flex-1">
-        {selected ? <p>Showing products for: <strong>{selected}</strong></p> : <p>Select a category</p>}
+        {selected ? (
+          <p>
+            Showing products for: <strong>{selected}</strong>
+          </p>
+        ) : (
+          <p>Select a category</p>
+        )}
       </section>
     </div>
   );

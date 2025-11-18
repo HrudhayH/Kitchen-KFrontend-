@@ -3,9 +3,16 @@
  * Handles all brand-related API calls
  */
 
-import { apiFetch } from '@/lib/api';
-import type { Brand, BrandsApiResponse, BrandApiResponse } from '@/lib/types/brand';
-import { normalizeBrandsResponse, normalizeBrandResponse } from '@/lib/adapters/brand.adapter';
+import { apiFetch } from "@/lib/api";
+import type {
+  Brand,
+  BrandsApiResponse,
+  BrandApiResponse,
+} from "@/lib/types/brand";
+import {
+  normalizeBrandsResponse,
+  normalizeBrandResponse,
+} from "@/lib/adapters/brand.adapter";
 
 /**
  * Fetch all brands from the API
@@ -14,12 +21,12 @@ import { normalizeBrandsResponse, normalizeBrandResponse } from '@/lib/adapters/
  */
 export async function getBrands(): Promise<Brand[]> {
   try {
-    const response = await apiFetch<BrandsApiResponse>('/brands');
-    
+    const response = await apiFetch<BrandsApiResponse>("/brands");
+
     // ADAPTER: Normalize response using adapter
     return normalizeBrandsResponse(response);
   } catch (error) {
-    console.error('Failed to fetch brands:', error);
+    console.error("Failed to fetch brands:", error);
     throw error;
   }
 }
@@ -33,7 +40,7 @@ export async function getBrands(): Promise<Brand[]> {
 export async function getBrand(slug: string): Promise<Brand> {
   try {
     const response = await apiFetch<BrandApiResponse>(`/brands/${slug}`);
-    
+
     // ADAPTER: Normalize response using adapter
     return normalizeBrandResponse(response);
   } catch (error) {

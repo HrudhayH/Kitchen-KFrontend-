@@ -5,9 +5,13 @@
 
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { login as apiLogin, logout as apiLogout, getProfile } from '@/lib/api/auth.api';
-import type { User, LoginPayload } from '@/lib/types/user';
+import { useState, useEffect, useCallback } from "react";
+import {
+  login as apiLogin,
+  logout as apiLogout,
+  getProfile,
+} from "@/lib/api/auth.api";
+import type { User, LoginPayload } from "@/lib/types/user";
 
 interface UseAuthReturn {
   user: User | null;
@@ -20,7 +24,7 @@ interface UseAuthReturn {
 
 /**
  * Hook for managing authentication state
- * 
+ *
  * Usage:
  * ```tsx
  * const { user, token, login, logout } = useAuth();
@@ -36,25 +40,25 @@ export function useAuth(): UseAuthReturn {
    */
   useEffect(() => {
     const initAuth = () => {
-      if (typeof window === 'undefined') {
+      if (typeof window === "undefined") {
         setLoading(false);
         return;
       }
 
       // Try to get token from localStorage
-      const storedToken = localStorage.getItem('token');
-      
+      const storedToken = localStorage.getItem("token");
+
       if (storedToken) {
         setToken(storedToken);
 
         // Try to get cached user data
-        const cachedUser = localStorage.getItem('user');
+        const cachedUser = localStorage.getItem("user");
         if (cachedUser) {
           try {
             setUser(JSON.parse(cachedUser));
             setLoading(false);
           } catch (error) {
-            console.error('Failed to parse cached user:', error);
+            console.error("Failed to parse cached user:", error);
             // Fetch fresh user data if cache is invalid
             fetchUserProfile();
           }
@@ -82,16 +86,16 @@ export function useAuth(): UseAuthReturn {
       } else {
         // Token might be invalid, clear it
         setToken(null);
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('token');
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("token");
         }
       }
     } catch (error) {
-      console.error('Failed to fetch user profile:', error);
+      console.error("Failed to fetch user profile:", error);
       // Clear invalid token
       setToken(null);
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('token');
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("token");
       }
     } finally {
       setLoading(false);
@@ -112,14 +116,14 @@ export function useAuth(): UseAuthReturn {
       setUser(newUser);
 
       // Store in localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('token', newToken);
-        localStorage.setItem('user', JSON.stringify(newUser));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", newToken);
+        localStorage.setItem("user", JSON.stringify(newUser));
       }
 
       return { token: newToken, user: newUser };
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
       throw error;
     } finally {
       setLoading(false);

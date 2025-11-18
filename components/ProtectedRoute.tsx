@@ -1,7 +1,7 @@
 /**
  * Protected Route Component
  * Wrapper that requires authentication to access child components
- * 
+ *
  * Usage:
  * ```tsx
  * <ProtectedRoute>
@@ -12,19 +12,19 @@
 
 "use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/hooks/useAuth';
-import { Loader2 } from 'lucide-react';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { Loader2 } from "lucide-react";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   redirectTo?: string;
 }
 
-export default function ProtectedRoute({ 
-  children, 
-  redirectTo = '/(auth)/login' 
+export default function ProtectedRoute({
+  children,
+  redirectTo = "/(auth)/login",
 }: ProtectedRouteProps) {
   const { user, loading } = useAuth();
   const router = useRouter();

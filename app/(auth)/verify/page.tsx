@@ -4,19 +4,19 @@
  * Renders the OTP verification form with email, purpose, and redirect from search params
  */
 
-import VerifyOtpClient from './VerifyOtpClient';
+import VerifyOtpClient from "./VerifyOtpClient";
 
 interface VerifyOtpPageProps {
   searchParams: {
     email?: string;
-    purpose?: 'login' | 'signup' | 'forgot';
+    purpose?: "login" | "signup" | "forgot";
     redirectTo?: string;
   };
 }
 
 export default function VerifyOtpPage({ searchParams }: VerifyOtpPageProps) {
-  const email = searchParams.email || '';
-  const purpose = searchParams.purpose || 'login';
+  const email = searchParams.email || "";
+  const purpose = searchParams.purpose || "login";
   const redirectTo = searchParams.redirectTo;
 
   return (
@@ -26,15 +26,13 @@ export default function VerifyOtpPage({ searchParams }: VerifyOtpPageProps) {
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
             Kitchen Kettles
           </h1>
-          <p className="text-slate-600">
-            Enter the OTP sent to your email
-          </p>
+          <p className="text-slate-600">Enter the OTP sent to your email</p>
         </div>
-        
-        <VerifyOtpClient 
-          email={email} 
-          purpose={purpose} 
-          redirectTo={redirectTo} 
+
+        <VerifyOtpClient
+          email={email}
+          purpose={purpose}
+          redirectTo={redirectTo}
         />
       </div>
     </div>

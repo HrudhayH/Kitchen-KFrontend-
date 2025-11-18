@@ -5,30 +5,38 @@
 
 "use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { login } from '@/lib/api/auth.api';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, AlertCircle, LogIn, Smartphone } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { login } from "@/lib/api/auth.api";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2, AlertCircle, LogIn, Smartphone } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface LoginFormClientProps {
   redirectTo?: string;
 }
 
-export default function LoginFormClient({ redirectTo = '/orders' }: LoginFormClientProps) {
+export default function LoginFormClient({
+  redirectTo = "/orders",
+}: LoginFormClientProps) {
   const router = useRouter();
-  
+
   // Form state
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [otp, setOtp] = useState('');
-  
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+
   // UI state
   const [useOTP, setUseOTP] = useState(false);
   const [usePhone, setUsePhone] = useState(false);
@@ -42,20 +50,20 @@ export default function LoginFormClient({ redirectTo = '/orders' }: LoginFormCli
     // Check if email or phone is provided
     const hasIdentifier = usePhone ? phone.trim() : email.trim();
     if (!hasIdentifier) {
-      setError(usePhone ? 'Phone number is required' : 'Email is required');
+      setError(usePhone ? "Phone number is required" : "Email is required");
       return false;
     }
 
     // Check if password or OTP is provided
     const hasCredential = useOTP ? otp.trim() : password.trim();
     if (!hasCredential) {
-      setError(useOTP ? 'OTP is required' : 'Password is required');
+      setError(useOTP ? "OTP is required" : "Password is required");
       return false;
     }
 
     // Validate email format (basic)
-    if (!usePhone && email && !email.includes('@')) {
-      setError('Please enter a valid email address');
+    if (!usePhone && email && !email.includes("@")) {
+      setError("Please enter a valid email address");
       return false;
     }
 
@@ -79,7 +87,7 @@ export default function LoginFormClient({ redirectTo = '/orders' }: LoginFormCli
     try {
       // Prepare login payload
       const payload: any = {};
-      
+
       if (usePhone) {
         payload.phone = phone;
       } else {
@@ -96,13 +104,14 @@ export default function LoginFormClient({ redirectTo = '/orders' }: LoginFormCli
       const { token, user } = await login(payload);
 
       // Store token in localStorage (already done by login function, but being explicit)
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
       // Success! Redirect to the specified page
       router.push(redirectTo);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Login failed. Please try again.';
+      const errorMessage =
+        err instanceof Error ? err.message : "Login failed. Please try again.";
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -210,7 +219,7 @@ export default function LoginFormClient({ redirectTo = '/orders' }: LoginFormCli
                 autoComplete="one-time-code"
               />
               <p className="text-xs text-slate-500 mt-1">
-                OTP sent to your {usePhone ? 'phone' : 'email'}
+                OTP sent to your {usePhone ? "phone" : "email"}
               </p>
             </div>
           ) : (
@@ -242,12 +251,7 @@ export default function LoginFormClient({ redirectTo = '/orders' }: LoginFormCli
           )}
 
           {/* Submit Button */}
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={loading}
-            size="lg"
-          >
+          <Button type="submit" className="w-full" disabled={loading} size="lg">
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -263,7 +267,7 @@ export default function LoginFormClient({ redirectTo = '/orders' }: LoginFormCli
 
           {/* Sign Up Link */}
           <div className="text-center text-sm text-slate-600">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <a
               href="/signup"
               className="text-emerald-600 hover:text-emerald-700 hover:underline font-medium"

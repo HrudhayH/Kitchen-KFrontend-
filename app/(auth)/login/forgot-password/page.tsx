@@ -10,10 +10,11 @@ export default function ForgotPasswordPage() {
 
   const handleForgotPassword = async (e: any) => {
     e.preventDefault();
-    const redirectUrl = typeof window !== 'undefined' 
-      ? `${window.location.origin}/reset-password`
-      : '/reset-password';
-    
+    const redirectUrl =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/reset-password`
+        : "/reset-password";
+
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: redirectUrl,
     });
@@ -32,7 +33,9 @@ export default function ForgotPasswordPage() {
           Forgot Password
         </h1>
 
-        {message && <p className="text-center text-green-600 mb-3">{message}</p>}
+        {message && (
+          <p className="text-center text-green-600 mb-3">{message}</p>
+        )}
 
         <form onSubmit={handleForgotPassword} className="space-y-4">
           <input

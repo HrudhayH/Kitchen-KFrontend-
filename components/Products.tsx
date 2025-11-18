@@ -27,7 +27,7 @@ export default function ProductList({
   onLoadMore,
 }: ProductListProps) {
   const [visibleCount, setVisibleCount] = useState<number>(
-    Math.min(initialShown, products.length)
+    Math.min(initialShown, products.length),
   );
   const [localProducts, setLocalProducts] = useState<Product[]>(products);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -48,7 +48,9 @@ export default function ProductList({
           setVisibleCount((v) => v + more.length);
         } else {
           // fallback: increase visible count from existing list
-          setVisibleCount((v) => Math.min(localProducts.length, v + initialShown));
+          setVisibleCount((v) =>
+            Math.min(localProducts.length, v + initialShown),
+          );
         }
       } finally {
         setLoadingMore(false);
@@ -60,7 +62,11 @@ export default function ProductList({
   };
 
   if (!localProducts || localProducts.length === 0) {
-    return <p className="p-4 sm:p-6 text-center text-gray-500 text-sm sm:text-base">No products found.</p>;
+    return (
+      <p className="p-4 sm:p-6 text-center text-gray-500 text-sm sm:text-base">
+        No products found.
+      </p>
+    );
   }
 
   return (

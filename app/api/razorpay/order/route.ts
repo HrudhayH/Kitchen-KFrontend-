@@ -4,11 +4,11 @@
 import { POST as POST_MOCK } from "./order.route.mock";
 import { POST as POST_REAL } from "./order.route.real";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   const useMock = process.env.USE_RAZORPAY_MOCK === "true";
-  
+
   if (useMock) {
     return POST_MOCK(req);
   } else {

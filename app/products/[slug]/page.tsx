@@ -32,7 +32,8 @@ export default function ProductPage() {
   }, [params.slug]);
 
   if (loading) return <div className="text-center py-20">Loading...</div>;
-  if (!product) return <div className="text-center py-20">Product not found</div>;
+  if (!product)
+    return <div className="text-center py-20">Product not found</div>;
 
   // Determine safe image URL
   const imageUrl = product.images?.[0]
@@ -65,7 +66,9 @@ export default function ProductPage() {
         <p className="text-gray-600 mt-2">Brand: {product.brand?.name}</p>
         <p className="text-gray-600">Category: {product.category?.name}</p>
 
-        <p className="text-3xl font-bold text-green-600 mt-4">₹{product.price}</p>
+        <p className="text-3xl font-bold text-green-600 mt-4">
+          ₹{product.price}
+        </p>
 
         <div className="mt-4">
           <h2 className="font-semibold text-lg">Description</h2>

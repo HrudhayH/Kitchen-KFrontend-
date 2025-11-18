@@ -14,10 +14,6 @@ export type Brand = {
 /**
  * API response wrapper type
  */
-export type BrandsApiResponse = 
-  | Brand[]
-  | { success: true; data: Brand[] };
+export type BrandsApiResponse = Brand[] | { success: true; data: Brand[] };
 
-export type BrandApiResponse = 
-  | Brand
-  | { success: true; data: Brand };
+export type BrandApiResponse = Brand | { success: true; data: Brand };

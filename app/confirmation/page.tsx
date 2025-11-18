@@ -14,7 +14,11 @@ export default function ConfirmationPage() {
   const [loading, setLoading] = useState(true);
 
   const fetchOrder = useCallback(async () => {
-    const { data, error } = await supabase.from("orders").select("*").eq("id", orderId).maybeSingle();
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .eq("id", orderId)
+      .maybeSingle();
     if (error) {
       console.error(error);
     } else {
@@ -33,15 +37,21 @@ export default function ConfirmationPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow">
-        <h2 className="text-2xl font-bold mb-4 text-emerald-600">Thank you — your order is confirmed!</h2>
-        <p className="mb-4">Order ID: <strong>{order.id}</strong></p>
+        <h2 className="text-2xl font-bold mb-4 text-emerald-600">
+          Thank you — your order is confirmed!
+        </h2>
+        <p className="mb-4">
+          Order ID: <strong>{order.id}</strong>
+        </p>
 
         <div className="mb-4">
           <h3 className="font-semibold">Delivery Details</h3>
           <div className="text-sm text-gray-700">
             <div>{order.shipping_address?.name}</div>
             <div>{order.shipping_address?.address}</div>
-            <div>{order.shipping_address?.city} {order.shipping_address?.pin}</div>
+            <div>
+              {order.shipping_address?.city} {order.shipping_address?.pin}
+            </div>
             <div>{order.shipping_address?.phone}</div>
           </div>
         </div>
@@ -55,7 +65,9 @@ export default function ConfirmationPage() {
                   <div className="font-medium">{it.name}</div>
                   <div className="text-sm text-gray-500">Qty: {it.qty}</div>
                 </div>
-                <div className="font-semibold">₹{(it.price * it.qty).toFixed(2)}</div>
+                <div className="font-semibold">
+                  ₹{(it.price * it.qty).toFixed(2)}
+                </div>
               </li>
             ))}
           </ul>
@@ -66,8 +78,18 @@ export default function ConfirmationPage() {
           </div>
 
           <div className="mt-6 flex gap-3">
-            <button className="bg-emerald-600 text-white px-4 py-2 rounded" onClick={() => router.push("/products")}>Continue Shopping</button>
-            <button className="border px-4 py-2 rounded" onClick={() => router.push("/")}>Home</button>
+            <button
+              className="bg-emerald-600 text-white px-4 py-2 rounded"
+              onClick={() => router.push("/products")}
+            >
+              Continue Shopping
+            </button>
+            <button
+              className="border px-4 py-2 rounded"
+              onClick={() => router.push("/")}
+            >
+              Home
+            </button>
           </div>
         </div>
       </div>

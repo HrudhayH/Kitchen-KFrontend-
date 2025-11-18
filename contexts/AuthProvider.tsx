@@ -5,9 +5,9 @@
 
 "use client";
 
-import { createContext, useContext, ReactNode } from 'react';
-import { useAuth } from '@/lib/hooks/useAuth';
-import type { User, LoginPayload } from '@/lib/types/user';
+import { createContext, useContext, ReactNode } from "react";
+import { useAuth } from "@/lib/hooks/useAuth";
+import type { User, LoginPayload } from "@/lib/types/user";
 
 interface AuthContextType {
   user: User | null;
@@ -27,16 +27,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const auth = useAuth();
 
-  return (
-    <AuthContext.Provider value={auth}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
 /**
  * Hook to use auth context in components
- * 
+ *
  * Usage:
  * ```tsx
  * const { user, login, logout } = useAuthContext();
@@ -45,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuthContext() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuthContext must be used within an AuthProvider');
+    throw new Error("useAuthContext must be used within an AuthProvider");
   }
   return context;
 }

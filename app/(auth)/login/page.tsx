@@ -3,14 +3,14 @@
  * Renders the OTP-based login flow (redirects to request page)
  */
 
-import RequestOtpClient from '../request/RequestOtpClient';
+import RequestOtpClient from "../request/RequestOtpClient";
 
 interface LoginPageProps {
   searchParams: { redirect?: string };
 }
 
 export default function LoginPage({ searchParams }: LoginPageProps) {
-  const redirectTo = searchParams.redirect || '/orders';
+  const redirectTo = searchParams.redirect || "/orders";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
@@ -23,9 +23,9 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
             Sign in to your account
           </p>
         </div>
-        
+
         <RequestOtpClient purpose="login" />
-        
+
         {redirectTo && (
           <input type="hidden" name="redirectTo" value={redirectTo} />
         )}

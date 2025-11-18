@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   try {
@@ -19,11 +19,17 @@ export async function POST(req: Request) {
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (!keyId || !keySecret) {
-      return NextResponse.json({ error: "Razorpay keys not configured" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Razorpay keys not configured" },
+        { status: 500 },
+      );
     }
 
     if (!supabaseUrl || !supabaseServiceKey) {
-      return NextResponse.json({ error: "Supabase not configured" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Supabase not configured" },
+        { status: 500 },
+      );
     }
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);

@@ -9,6 +9,7 @@ This document describes the automated integration of the Orders listing feature 
 ## What Was Automated
 
 ### 1. **Auth Utilities** (`lib/utils/auth.ts`)
+
 - ✅ `getAccessToken()` - Retrieves token from localStorage or cookies
   - Checks multiple key names: `accessToken`, `access`, `token`
   - Falls back to cookie parsing if not in localStorage
@@ -17,6 +18,7 @@ This document describes the automated integration of the Orders listing feature 
 - ✅ `clearAccessToken()` - Removes all token variants from storage
 
 ### 2. **Orders API Client** (`lib/api/orders.api.ts`)
+
 - ✅ `fetchWithAuth(path, opts)` - Authenticated fetch with robust error handling
   - Automatically adds `Authorization: Bearer <token>` header
   - Handles network errors, CORS errors, and non-2xx responses
@@ -27,12 +29,14 @@ This document describes the automated integration of the Orders listing feature 
   - Returns empty array for invalid/unknown response shapes
 
 ### 3. **OTP Verify Integration** (`app/(auth)/verify/VerifyOtpClient.tsx`)
+
 - ✅ Modified to call `saveAccessToken()` on successful OTP verification
 - ✅ Checks multiple token key names: `access`, `token`, `accessToken`
 - ✅ Redirects to `/orders` after successful authentication (instead of `/`)
 - ✅ Stores user data if present in response
 
 ### 4. **Orders Page** (`app/orders/page.tsx`)
+
 - ✅ **Loading State**: Skeleton UI with spinner and "Loading orders..." message
 - ✅ **Empty State**: "No orders yet" with link to browse products
 - ✅ **401 Error (Not Authenticated)**:
@@ -54,6 +58,7 @@ This document describes the automated integration of the Orders listing feature 
   - "View Details" link to individual order page
 
 ### 5. **Backend CORS** (`kk-backend/src/app.js`)
+
 - ✅ CORS middleware already configured for `http://localhost:3000`
 - ✅ Supports credentials (cookies, Authorization headers)
 - ✅ No changes needed - already production-ready
@@ -79,40 +84,48 @@ kk-frontend/
 ## Manual Testing Steps
 
 ### Prerequisites
+
 - Node.js and npm installed
 - MongoDB running (or connection to remote MongoDB)
 - Test user email: `vecek79485@fermiro.com`
 
 ### Step 1: Start Backend
+
 ```bash
 cd kk-backend
 npm run dev
 ```
 
 **Expected output:**
+
 ```
 Server is running on port 5001
 MongoDB connected successfully
 ```
 
 **Verify backend is running:**
+
 ```bash
 curl -i http://localhost:5001
 ```
+
 Should return: `HTTP/1.1 200 OK` with JSON response `{"ok":true,"service":"kitchen-kettles-api"}`
 
 ### Step 2: Start Frontend
+
 ```bash
 cd kk-frontend
 npm run dev
 ```
 
 **Expected output:**
+
 ```
 ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 ```
 
 ### Step 3: Test OTP Login Flow
+
 1. Open browser to `http://localhost:3000/auth/request`
 2. Enter email: `vecek79485@fermiro.com`
 3. Select purpose: **Login**
@@ -123,30 +136,36 @@ ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 8. Click "Verify & Sign In"
 
 **Expected behavior:**
+
 - ✅ Token saved to localStorage under keys: `accessToken`, `access`, `token`
 - ✅ User data saved to localStorage under key: `user`
 - ✅ Auto-redirect to `/orders` page
 
 ### Step 4: Test Orders Page
+
 After successful login, you should be on `http://localhost:3000/orders`
 
 **Possible outcomes:**
 
 #### A. Orders Found
+
 - ✅ Orders displayed in responsive grid
 - ✅ Each card shows: Order ID, date, status, total, items
 - ✅ "View Details" button links to individual order page
 
 #### B. No Orders
+
 - ✅ Shows "No orders yet" message
 - ✅ "Browse Products" button links to `/products`
 
 #### C. Token Missing/Invalid (401 Error)
+
 - ✅ Shows "Authentication Required" message
 - ✅ Auto-redirects to `/auth/request` after 1.5s
 - ✅ "Login Now" button available for immediate redirect
 
 #### D. Backend Not Running (Network Error)
+
 - ✅ Shows "Network or CORS error" message
 - ✅ Displays `curl` command to check backend
 - ✅ "Check Backend" and "Retry" buttons available
@@ -154,47 +173,53 @@ After successful login, you should be on `http://localhost:3000/orders`
 ### Step 5: Test Error Scenarios
 
 #### Test 401 (No Token)
+
 ```bash
 # Clear localStorage and reload /orders page
 # In browser console:
 localStorage.clear();
 window.location.reload();
 ```
+
 **Expected:** "Authentication Required" error with auto-redirect
 
 #### Test Network Error (Backend Stopped)
+
 ```bash
 # Stop backend server (Ctrl+C in backend terminal)
 # Reload /orders page
 ```
+
 **Expected:** "Network or CORS error" message
 
 #### Test CORS Error (if backend misconfigured)
+
 If you see CORS errors in browser console:
+
 1. Verify `kk-backend/src/app.js` has:
    ```javascript
-   app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
+   app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
    ```
 2. Restart backend server
 3. Reload frontend
 
 ## API Endpoints Used
 
-| Endpoint | Method | Auth Required | Purpose |
-|----------|--------|---------------|---------|
-| `/api/auth/request-otp` | POST | No | Request OTP code |
-| `/api/auth/verify-otp` | POST | No | Verify OTP and get token |
-| `/api/orders/me` | GET | Yes | Get user's orders |
+| Endpoint                | Method | Auth Required | Purpose                  |
+| ----------------------- | ------ | ------------- | ------------------------ |
+| `/api/auth/request-otp` | POST   | No            | Request OTP code         |
+| `/api/auth/verify-otp`  | POST   | No            | Verify OTP and get token |
+| `/api/orders/me`        | GET    | Yes           | Get user's orders        |
 
 ## Token Storage Keys
 
 The system checks/stores tokens under multiple key names for maximum compatibility:
 
-| Key Name | Purpose |
-|----------|---------|
-| `accessToken` | Primary key (preferred) |
-| `access` | Alternate key (backend may use this) |
-| `token` | Legacy key (backward compatibility) |
+| Key Name      | Purpose                              |
+| ------------- | ------------------------------------ |
+| `accessToken` | Primary key (preferred)              |
+| `access`      | Alternate key (backend may use this) |
+| `token`       | Legacy key (backward compatibility)  |
 
 ## Response Shape Normalization
 
@@ -217,21 +242,27 @@ The `getMyOrders()` function handles these response shapes:
 ## Troubleshooting
 
 ### Issue: "No token" error even after login
+
 **Solution:**
+
 1. Check browser console for errors during OTP verify
 2. Verify `saveAccessToken()` is called in `VerifyOtpClient.tsx`
 3. Check localStorage in browser DevTools (Application tab)
 4. Ensure backend returns `access` or `token` in response
 
 ### Issue: CORS error in browser console
+
 **Solution:**
+
 1. Verify backend is running on `http://localhost:5001`
 2. Check `kk-backend/src/app.js` has CORS middleware configured
 3. Restart backend after any config changes
 4. Clear browser cache and reload
 
 ### Issue: Orders not displaying (empty array)
+
 **Solution:**
+
 1. Check if user has any orders in database
 2. Verify backend endpoint `/api/orders/me` returns data:
    ```bash
@@ -240,7 +271,9 @@ The `getMyOrders()` function handles these response shapes:
 3. Check browser console for response shape issues
 
 ### Issue: TypeScript errors in IDE
+
 **Solution:**
+
 1. Run TypeScript check:
    ```bash
    cd kk-frontend

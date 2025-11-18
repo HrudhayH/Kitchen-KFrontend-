@@ -1,13 +1,37 @@
 import Link from "next/link";
 
-export default function CategoryBar({ categories = [] }: { categories: any[] }) {
+export default function CategoryBar({
+  categories = [],
+}: {
+  categories: any[];
+}) {
   const items = categories.length
     ? categories
     : [
-        { id: "c1", name: "Mobiles", slug: "mobiles", image_url: "/icons/mobile.png" },
-        { id: "c2", name: "Kitchen", slug: "kitchen", image_url: "/icons/home.png" },
-        { id: "c3", name: "Appliances", slug: "appliances", image_url: "/icons/tv.png" },
-        { id: "c4", name: "Furniture", slug: "furniture", image_url: "/icons/furniture.png" },
+        {
+          id: "c1",
+          name: "Mobiles",
+          slug: "mobiles",
+          image_url: "/icons/mobile.png",
+        },
+        {
+          id: "c2",
+          name: "Kitchen",
+          slug: "kitchen",
+          image_url: "/icons/home.png",
+        },
+        {
+          id: "c3",
+          name: "Appliances",
+          slug: "appliances",
+          image_url: "/icons/tv.png",
+        },
+        {
+          id: "c4",
+          name: "Furniture",
+          slug: "furniture",
+          image_url: "/icons/furniture.png",
+        },
       ];
 
   return (

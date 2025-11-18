@@ -3,13 +3,13 @@
  * Displays a single brand with its information
  */
 
-import { notFound } from 'next/navigation';
-import { getBrand } from '@/lib/api/brands.api';
-import { Package } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { notFound } from "next/navigation";
+import { getBrand } from "@/lib/api/brands.api";
+import { Package } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
-type Props = { 
-  params: { slug: string } 
+type Props = {
+  params: { slug: string };
 };
 
 export default async function BrandPage({ params }: Props) {
@@ -19,11 +19,11 @@ export default async function BrandPage({ params }: Props) {
   }
 
   let brand;
-  
+
   try {
     brand = await getBrand(params.slug);
   } catch (error) {
-    console.error('Error fetching brand:', error);
+    console.error("Error fetching brand:", error);
     notFound();
   }
 

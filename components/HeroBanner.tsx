@@ -32,8 +32,12 @@ export default function HeroBanner() {
         className="w-full h-full object-cover"
       />
       <div className="absolute top-1/2 left-4 sm:left-6 md:left-10 transform -translate-y-1/2 text-white max-w-[80%] sm:max-w-[70%] md:max-w-[60%]">
-        <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg">{banner.title}</h1>
-        <p className="mt-1 sm:mt-2 text-sm sm:text-base md:text-lg drop-shadow-md">{banner.subtitle}</p>
+        <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg">
+          {banner.title}
+        </h1>
+        <p className="mt-1 sm:mt-2 text-sm sm:text-base md:text-lg drop-shadow-md">
+          {banner.subtitle}
+        </p>
       </div>
     </div>
   );

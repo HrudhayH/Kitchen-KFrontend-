@@ -1,11 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export type UserRole = 'admin' | 'seller' | 'customer';
+export type UserRole = "admin" | "seller" | "customer";
 
 export interface Profile {
   id: string;
@@ -65,9 +65,9 @@ export interface Offer {
   id: string;
   title: string;
   description?: string;
-  discount_type: 'percentage' | 'fixed';
+  discount_type: "percentage" | "fixed";
   discount_value: number;
-  applies_to: 'all' | 'brand' | 'category' | 'product';
+  applies_to: "all" | "brand" | "category" | "product";
   applies_to_id?: string;
   start_date: string;
   end_date: string;
@@ -89,7 +89,7 @@ export interface Order {
   id: string;
   user_id?: string;
   order_number: string;
-  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   subtotal: number;
   discount_amount: number;
   tax_amount: number;
@@ -110,6 +110,6 @@ export interface ContactMessage {
   email: string;
   subject: string;
   message: string;
-  status: 'new' | 'read' | 'replied';
+  status: "new" | "read" | "replied";
   created_at: string;
 }
