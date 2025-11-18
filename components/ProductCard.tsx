@@ -6,6 +6,7 @@ import { useToast } from "@/components/ToastContext";
 import { useState } from "react";
 import Image from "next/image";
 import QuantitySelector from "@/components/QuantitySelector";
+import { normalizeSrc } from "@/lib/normalizeSrc";
 
 export default function ProductCard({ product }: any) {
   const { addItem, updateQty, removeItem, items } = useCart();
@@ -62,16 +63,17 @@ export default function ProductCard({ product }: any) {
   };
 
   return (
-    <div className="bg-white border rounded-lg overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
+    <div className="bg-white border rounded-lg overflow-hidden flex flex-col h-full min-h-[320px] md:min-h-[360px] hover:shadow-lg transition-shadow">
       <Link href={`/products/${product.slug}`}>
         <div className="h-36 sm:h-40 md:h-48 w-full overflow-hidden bg-gray-100">
           {product.images ? (
             <Image
-              src={product?.images}
-              alt={product.name}
-              width={100}
-              height={100}
+              src={normalizeSrc(product.images)}
+              alt={product.name ?? "Product image"}
+              width={300}
+              height={300}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              unoptimized={product.images?.startsWith("http")}
             />
           ) : (
             <div className="h-full flex items-center justify-center text-xs sm:text-sm text-gray-400">
@@ -86,7 +88,7 @@ export default function ProductCard({ product }: any) {
             {product.name}
           </h3>
         </Link>
-        <div className="mt-2 flex items-center justify-between gap-2">
+        <div className="mt-4 flex items-center justify-between gap-2">
           <div className="text-sm sm:text-base md:text-lg font-bold text-emerald-600">
             ₹{product.price}
           </div>

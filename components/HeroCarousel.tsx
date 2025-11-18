@@ -55,13 +55,15 @@ export default function HeroCarousel() {
             {/* Overlay */}
             <div className="absolute inset-0 bg-black/40"></div>
             {/* Text */}
-            <div className="absolute left-4 sm:left-6 md:left-8 top-1/3 text-white max-w-[85%] sm:max-w-[75%] md:max-w-[65%]">
-              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg">
-                {s.title}
-              </h2>
-              <p className="mt-1 sm:mt-2 text-sm sm:text-base md:text-lg lg:text-2xl drop-shadow-md">
-                {s.subtitle}
-              </p>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white max-w-[85%] sm:max-w-[75%] md:max-w-[65%]">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-lg">
+                  {s.title}
+                </h2>
+                <p className="text-base sm:text-lg md:text-xl text-white/90 mt-3 drop-shadow-md">
+                  {s.subtitle}
+                </p>
+              </div>
             </div>
           </div>
         ))}

@@ -31,13 +31,15 @@ export default function HeroBanner() {
         alt="Hero Banner"
         className="w-full h-full object-cover"
       />
-      <div className="absolute top-1/2 left-4 sm:left-6 md:left-10 transform -translate-y-1/2 text-white max-w-[80%] sm:max-w-[70%] md:max-w-[60%]">
-        <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg">
-          {banner.title}
-        </h1>
-        <p className="mt-1 sm:mt-2 text-sm sm:text-base md:text-lg drop-shadow-md">
-          {banner.subtitle}
-        </p>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-center text-white max-w-[80%] sm:max-w-[70%] md:max-w-[60%]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight drop-shadow-lg">
+            {banner.title}
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl text-white/90 mt-3 drop-shadow-md">
+            {banner.subtitle}
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -44,6 +44,7 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -76,14 +77,33 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
-    /* Header top padding is managed dynamically by Navbar to avoid layout jumps — do not set a large fixed padding here. */
     padding-top: 0;
     margin: 0;
-    background: white; /* or your --background variable if used */
+    background: white;
     color: #111;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+}
+
+/* ---------------------------------------------------- */
+/* FIX NAVBAR GAP — ADDED BELOW                         */
+/* ---------------------------------------------------- */
+
+:root {
+  --navbar-height: 0px; /* matches h-16 in Navbar */
+}
+
+/* Ensure page content starts just below the navbar */
+main {
+  padding-top: var(--navbar-height) !important;
+}
+
+/* Remove accidental extra top margins from first section */
+main > *:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }

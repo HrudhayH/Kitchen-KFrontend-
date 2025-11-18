@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { supabase, Product, Brand, Category } from "@/lib/supabase";
 import HeroCarousel from "@/components/HeroCarousel";
-import CategoryBar from "@/components/CategoryBar";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import HeroBanner from "@/components/HeroBanner";
+import { normalizeSrc } from "@/lib/normalizeSrc";
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -45,14 +46,14 @@ export default function HomePage() {
     <div className="bg-white min-h-screen">
       {/* Category + Hero */}
       <section className="bg-white">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4">
-          <CategoryBar categories={categories} />
+        <div className="max-w-8xl mx-auto px-3 sm:px-4">
+          {/* homepage categories strip removed */}
           <HeroCarousel />
         </div>
       </section>
 
       {/* Top Products */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-10">
+      <section className="max-w-8xl mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-10">
         <div className="flex items-center justify-between mb-4 sm:mb-6">
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold">
             Top Picks for You
@@ -78,7 +79,7 @@ export default function HomePage() {
       </section>
 
       {/* Brands */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-4 py-8 sm:py-10 md:py-12 bg-slate-50 rounded-lg sm:rounded-xl">
+      <section className="max-w-8xl mx-auto px-3 sm:px-4 py-8 sm:py-10 md:py-12 bg-slate-50 rounded-lg sm:rounded-xl">
         <div className="flex items-center justify-between mb-6 sm:mb-8">
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold">Brands</h2>
           <Link
@@ -94,15 +95,19 @@ export default function HomePage() {
             <Link
               key={b.id}
               href={`/brands/${b.slug}`}
-              className="p-4 sm:p-5 md:p-6 bg-white rounded-xl sm:rounded-2xl shadow-md hover:shadow-xl transition flex items-center justify-center min-h-[80px] sm:min-h-[100px] md:min-h-[120px]"
+              className="p-4 sm:p-5 md:p-6 bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-md transition flex items-center justify-center min-h-[80px] sm:min-h-[100px] md:min-h-[120px]"
             >
               {b.logo_url ? (
-                /* TODO: replace with next/image if src is static */
-                <img
-                  src={b.logo_url}
-                  alt={b.name}
-                  className="h-12 sm:h-16 md:h-20 object-contain max-w-full"
-                />
+                <div className="h-12 sm:h-16 md:h-20 w-full flex items-center justify-center">
+                  <Image
+                    src={normalizeSrc(b.logo_url)}
+                    alt={b.name ?? "Brand logo"}
+                    width={160}
+                    height={80}
+                    className="object-contain max-w-full max-h-full"
+                    unoptimized={b.logo_url?.startsWith("http")}
+                  />
+                </div>
               ) : (
                 <span className="font-semibold text-gray-700 text-xs sm:text-sm md:text-base text-center">
                   {b.name}

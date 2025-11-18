@@ -200,7 +200,7 @@ export default function ServicesPage() {
               </h2>
 
               <p className="text-slate-700 mb-6 leading-relaxed">
-                Your kitchen deserves to run smoothly — and we're here to make sure it does!
+                Your kitchen deserves to run smoothly — and we&apos;re here to make sure it does!
                 From kettles to mixers and everything in between, our expert technicians
                 provide fast, reliable, and affordable appliance repair services right at
                 your doorstep.
