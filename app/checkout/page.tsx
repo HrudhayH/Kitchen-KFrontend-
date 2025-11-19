@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCart } from "@/components/CartContext";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -185,10 +186,12 @@ export default function CheckoutPage() {
                 >
                   <div className="flex items-center gap-3 w-full sm:w-auto">
                     {/* TODO: replace with next/image if src is static */}
-                    <img
+                    <Image
                       src={it.image_url || "/placeholder.png"}
-                      className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded flex-shrink-0"
                       alt={it.name}
+                      width={64}
+                      height={64}
+                      className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-sm sm:text-base truncate">

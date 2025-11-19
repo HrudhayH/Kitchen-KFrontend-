@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function CategoryBar({
@@ -45,9 +46,11 @@ export default function CategoryBar({
           >
             <div className="bg-gray-100 hover:bg-gray-200 transition rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 shadow-lg w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 flex items-center justify-center">
               {/* TODO: replace with next/image if src is static */}
-              <img
+              <Image
                 src={c.image_url}
                 alt={c.name}
+                width={64}
+                height={64}
                 className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-contain"
               />
             </div>

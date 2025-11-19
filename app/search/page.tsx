@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import ProductCard from "@/components/ProductCard";
@@ -69,9 +70,11 @@ export default function SearchPage() {
                   >
                     {b.logo_url ? (
                       /* TODO: replace with next/image if src is static */
-                      <img
+                      <Image
                         src={b.logo_url}
                         alt={b.name}
+                        width={48}
+                        height={48}
                         className="h-12 object-contain"
                       />
                     ) : (

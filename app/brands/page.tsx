@@ -3,6 +3,7 @@
  * Fetches and displays all brands from the backend API
  */
 
+import Image from "next/image";
 import Link from "next/link";
 import { getBrands } from "@/lib/api/brands.api";
 import { Card, CardContent } from "@/components/ui/card";
@@ -72,9 +73,11 @@ export default async function BrandsPage() {
                     <CardContent className="p-3 sm:p-4 text-center w-full">
                       {brand.logoUrl ? (
                         /* TODO: replace with next/image if src is static */
-                        <img
+                        <Image
                           src={brand.logoUrl}
                           alt={brand.name}
+                          width={48}
+                          height={48}
                           className="h-8 sm:h-10 md:h-12 mx-auto object-contain mb-1 sm:mb-2 group-hover:scale-105 transition-transform"
                         />
                       ) : (

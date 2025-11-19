@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 type Category = {
@@ -91,9 +92,11 @@ export default function CategoriesPage() {
                 <div className="border p-6 rounded-xl hover:shadow-lg transition-shadow cursor-pointer bg-white">
                   {category.image_url && (
                     <div className="mb-4 h-48 overflow-hidden rounded-lg">
-                      <img
+                      <Image
                         src={category.image_url}
                         alt={category.name}
+                        width={600}
+                        height={400}
                         className="w-full h-full object-cover hover:scale-105 transition-transform"
                         style={{ width: "100%", height: "auto" }} // fix aspect ratio warning
                       />

@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useCart } from "@/components/CartContext";
 
 export default function ProductCard({ product }) {
@@ -7,9 +8,11 @@ export default function ProductCard({ product }) {
   return (
     <div className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
       {/* TODO: replace with next/image if src is static */}
-      <img
+      <Image
         src={product.image_url || "/placeholder.png"}
         alt={product.name}
+        width={600}
+        height={400}
         className="w-full h-40 object-contain mb-3"
       />
       <h3 className="text-sm font-semibold mb-1">{product.name}</h3>

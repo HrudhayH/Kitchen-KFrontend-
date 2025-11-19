@@ -3,6 +3,7 @@
  * Displays a single brand with its information
  */
 
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getBrand } from "@/lib/api/brands.api";
 import { Package } from "lucide-react";
@@ -44,9 +45,11 @@ export default async function BrandPage({ params }: Props) {
                   <div className="flex-shrink-0">
                     {brand.logoUrl ? (
                       /* TODO: replace with next/image if src is static */
-                      <img
+                      <Image
                         src={brand.logoUrl}
                         alt={brand.name}
+                        width={160}
+                        height={160}
                         className="w-40 h-40 object-contain border border-slate-200 rounded-lg p-4 bg-white"
                       />
                     ) : (

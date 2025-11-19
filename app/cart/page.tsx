@@ -7,6 +7,7 @@ import { useCart } from "@/components/CartContext";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import QuantitySelector from "@/components/QuantitySelector";
 import Image from "next/image";
+import { normalizeSrc } from "@/lib/normalizeSrc";
 
 export default function CartPage() {
   const { items, removeItem, clearCart, updateQty } = useCart();
@@ -100,11 +101,12 @@ export default function CartPage() {
                   <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
                     {it.image_url ? (
                       <Image
-                        src={it.image_url}
-                        alt={it.name}
+                        src={normalizeSrc(it.image_url)}
+                        alt={it.name ?? "Product image"}
                         width={80}
                         height={80}
                         className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded flex-shrink-0"
+                        unoptimized={it.image_url?.startsWith("http")}
                       />
                     ) : (
                       <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-400 flex-shrink-0">
