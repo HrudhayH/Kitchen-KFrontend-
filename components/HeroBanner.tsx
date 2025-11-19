@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export default function HeroBanner() {
@@ -26,9 +27,10 @@ export default function HeroBanner() {
   return (
     <div className="w-full h-[250px] sm:h-[300px] md:h-[400px] lg:h-[450px] relative rounded-lg sm:rounded-xl overflow-hidden">
       {/* TODO: replace with next/image if src is static */}
-      <img
+      <Image
         src={banner.image_url}
         alt="Hero Banner"
+        fill
         className="w-full h-full object-cover"
       />
       <div className="absolute inset-0 flex items-center justify-center">

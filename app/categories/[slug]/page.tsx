@@ -88,9 +88,9 @@ export default function CategoryPage() {
     return (
       <div className="container mx-auto py-8">
         <h1 className="text-2xl font-bold mb-4">
-          Products in "{categoryName ?? slug}" category
+          Products in &quot;{categoryName ?? slug}&quot; category
         </h1>
-        <p>No products found for "{categoryName ?? slug}".</p>
+        <p>No products found for &quot;{categoryName ?? slug}&quot;.</p>
       </div>
     );
   }
@@ -98,7 +98,7 @@ export default function CategoryPage() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">
-        Products in "{categoryName ?? slug}" category
+        Products in &quot;{categoryName ?? slug}&quot; category
       </h1>
       <ProductList products={products} />
     </div>

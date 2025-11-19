@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { apiGet } from "@/lib/api";
 
@@ -99,9 +100,11 @@ export default function ProductPage() {
   return (
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8 bg-white rounded shadow">
       <div className="flex flex-col items-center">
-        <img
+        <Image
           src={imageUrl}
           alt={product.title || "Product image"}
+          width={320}
+          height={320}
           className="w-80 h-80 object-contain border rounded p-4"
         />
 

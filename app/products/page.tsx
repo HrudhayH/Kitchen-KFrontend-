@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { apiGet } from "@/lib/api";
 import { Button } from "@/components/ui/button";
@@ -134,7 +135,7 @@ export default function ProductsPage() {
                 >
                   <Link href={`/products/${product.slug}`}>
                     <div className="relative h-48 bg-slate-100 overflow-hidden">
-                      <img
+                      <Image
                         src={
                           product.images?.[0]
                             ? product.images[0].includes(
@@ -150,6 +151,8 @@ export default function ProductsPage() {
                               )}`
                         }
                         alt={product.title}
+                        width={400}
+                        height={400}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
 

@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const slides = [
   {
@@ -47,9 +48,10 @@ export default function HeroCarousel() {
             }`}
           >
             {/* TODO: replace with next/image if src is static */}
-            <img
+            <Image
               src={s.image}
               alt={s.title}
+              fill
               className="w-full h-full object-cover"
             />
             {/* Overlay */}
